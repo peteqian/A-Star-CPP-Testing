@@ -1,0 +1,1 @@
+-isystem E:/Github-Repos/CSIT314/googletest/googlemock/include -isystem E:/Github-Repos/CSIT314/googletest/googlemock -isystem E:/Github-Repos/CSIT314/googletest/googletest/include -isystem E:/Github-Repos/CSIT314/googletest/googletest

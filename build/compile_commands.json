@@ -1,0 +1,32 @@
+[
+{
+  "directory": "E:/Github-Repos/CSIT314/build",
+  "command": "C:\\PROGRA~1\\MINGW-~1\\X86_64~1.0-P\\mingw64\\bin\\X86_64~2.EXE   -g -std=gnu++11 -o CMakeFiles\\Ass.dir\\ass2-refactor.cpp.obj -c E:\\Github-Repos\\CSIT314\\ass2-refactor.cpp",
+  "file": "E:/Github-Repos/CSIT314/ass2-refactor.cpp"
+},
+{
+  "directory": "E:/Github-Repos/CSIT314/build/googletest/googlemock",
+  "command": "C:\\PROGRA~1\\MINGW-~1\\X86_64~1.0-P\\mingw64\\bin\\X86_64~2.EXE  @CMakeFiles/gmock.dir/includes_CXX.rsp -g -Wall -Wshadow -Werror -Wno-error=dangling-else -DGTEST_HAS_PTHREAD=0 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -std=c++11 -o CMakeFiles\\gmock.dir\\src\\gmock-all.cc.obj -c E:\\Github-Repos\\CSIT314\\googletest\\googlemock\\src\\gmock-all.cc",
+  "file": "E:/Github-Repos/CSIT314/googletest/googlemock/src/gmock-all.cc"
+},
+{
+  "directory": "E:/Github-Repos/CSIT314/build/googletest/googlemock",
+  "command": "C:\\PROGRA~1\\MINGW-~1\\X86_64~1.0-P\\mingw64\\bin\\X86_64~2.EXE  @CMakeFiles/gmock_main.dir/includes_CXX.rsp -g -Wall -Wshadow -Werror -Wno-error=dangling-else -DGTEST_HAS_PTHREAD=0 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -std=c++11 -o CMakeFiles\\gmock_main.dir\\src\\gmock_main.cc.obj -c E:\\Github-Repos\\CSIT314\\googletest\\googlemock\\src\\gmock_main.cc",
+  "file": "E:/Github-Repos/CSIT314/googletest/googlemock/src/gmock_main.cc"
+},
+{
+  "directory": "E:/Github-Repos/CSIT314/build/googletest/googletest",
+  "command": "C:\\PROGRA~1\\MINGW-~1\\X86_64~1.0-P\\mingw64\\bin\\X86_64~2.EXE  @CMakeFiles/gtest.dir/includes_CXX.rsp -g -Wall -Wshadow -Werror -Wno-error=dangling-else -DGTEST_HAS_PTHREAD=0 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -std=c++11 -o CMakeFiles\\gtest.dir\\src\\gtest-all.cc.obj -c E:\\Github-Repos\\CSIT314\\googletest\\googletest\\src\\gtest-all.cc",
+  "file": "E:/Github-Repos/CSIT314/googletest/googletest/src/gtest-all.cc"
+},
+{
+  "directory": "E:/Github-Repos/CSIT314/build/googletest/googletest",
+  "command": "C:\\PROGRA~1\\MINGW-~1\\X86_64~1.0-P\\mingw64\\bin\\X86_64~2.EXE  @CMakeFiles/gtest_main.dir/includes_CXX.rsp -g -Wall -Wshadow -Werror -Wno-error=dangling-else -DGTEST_HAS_PTHREAD=0 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -std=c++11 -o CMakeFiles\\gtest_main.dir\\src\\gtest_main.cc.obj -c E:\\Github-Repos\\CSIT314\\googletest\\googletest\\src\\gtest_main.cc",
+  "file": "E:/Github-Repos/CSIT314/googletest/googletest/src/gtest_main.cc"
+},
+{
+  "directory": "E:/Github-Repos/CSIT314/build/test",
+  "command": "C:\\PROGRA~1\\MINGW-~1\\X86_64~1.0-P\\mingw64\\bin\\X86_64~2.EXE  @CMakeFiles/Test.dir/includes_CXX.rsp -g -std=gnu++11 -o CMakeFiles\\Test.dir\\Tests.cpp.obj -c E:\\Github-Repos\\CSIT314\\test\\Tests.cpp",
+  "file": "E:/Github-Repos/CSIT314/test/Tests.cpp"
+}
+]
