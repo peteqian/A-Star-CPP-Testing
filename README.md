@@ -2,7 +2,7 @@
 CSIT314 - Unit Testing
 
 The program can be executed using VSCode using Windows 10.
-In order to execute googletest, you must install the following pre-requisites:
+In order to execute test cases, you must install the following pre-requisites:
 
 1. CMake and CMake tools via VSCode
 2. C/C++ (VSCode Extension)
