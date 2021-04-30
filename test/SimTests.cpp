@@ -1,5 +1,7 @@
+#include "../ass2-refactor.h"
 #include <gtest/gtest.h>
 
 TEST(TestCase1, subTest1){
-    ASSERT_EQ(1,2);
+    Sim sim;
+    sim.run();
 }
