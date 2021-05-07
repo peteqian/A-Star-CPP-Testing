@@ -1,9 +1,7 @@
 #include "ass3-refactor.h"
 
 int Simulation::openFile(const char* fileName){
-    //cerr << "Please enter the name of the input file: ";
-    //cin >> fileName;
-    //fileName = "Ass3.txt";
+    
     cerr << "Entering the file name: " << fileName << endl;
 
     fin.open(fileName);
@@ -16,22 +14,7 @@ int Simulation::openFile(const char* fileName){
 }
 
 int Simulation::run(){
-    /*
-    //char fileName[20];
-    string fileName;
-    ifstream fin;
-
-    cerr << "Please enter the name of the input file: ";
-    //cin >> fileName;
-    //fileName = "Ass3.txt";
-
-    fin.open(fileName);
-
-    if(!fin){
-        cerr << "Error opening file " << fileName << ". Program will exit" << endl;
-        return 0;
-    }
-    */
+    
 
     int id, nEdges;
     int id_tracker = 0;
@@ -59,7 +42,7 @@ int Simulation::run(){
         }
     }
 
-    cout << "Finished reading vertices and their x-y coordinates." << endl;
+    //cout << "Finished reading vertices and their x-y coordinates." << endl;
 
     edgeWeight = new double*[nVertices];
 
@@ -73,7 +56,7 @@ int Simulation::run(){
         }
     }
     
-    cout << "Finished reading edges." << endl;
+    //cout << "Finished reading edges." << endl;
     
     int row, col;
 
@@ -89,7 +72,7 @@ int Simulation::run(){
         }
     }
 
-    cout << "Finished fixing edges to create non-directed graph." << endl;
+    //cout << "Finished fixing edges to create non-directed graph." << endl;
 
     // Read start and goal vertex and calculate heuristics for each vertex.
     fin >> startVertex >> goalVertex;
@@ -99,13 +82,15 @@ int Simulation::run(){
     // Find shortest path
     int status = 0;
 
-    cout << "Running astar() program" << endl;
+    //cout << "Running astar() program" << endl;
     
     status = astar();
 
+    /*
     // Report shortest Path information
     int *path;
     int nPathVertices;
+    */
 
     if (status == 0){
         cout << "The shortest path has a length of " << vertices[goalVertex].length << endl;
@@ -129,6 +114,7 @@ int Simulation::run(){
         return 1;
     }
 
+    /*
     // For second shortest path
     int nPathEdges;
     double bestLength;
@@ -136,7 +122,8 @@ int Simulation::run(){
     int from, to;
     int nPath2Vertices;
     int *path2;
-
+    */
+   
     path2 = new int[nVertices];
     nPathEdges = nPathVertices - 1;
     bestLength = HUGE_VAL;

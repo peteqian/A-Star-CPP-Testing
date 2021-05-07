@@ -48,7 +48,18 @@ class Simulation{
         void makeheap(int *heap, int heapSize);
         void siftUp(int *heap, int i);
         void siftDown (int *heap, int heapSize, int i);
+
+        // Report shortest Path information
+        int *path;
+        int nPathVertices;
         
+        // For second shortest path
+        int nPathEdges;
+        double bestLength;
+        double savedWeight;
+        int from, to;
+        int nPath2Vertices;
+        int *path2;
 };
 
 #endif
