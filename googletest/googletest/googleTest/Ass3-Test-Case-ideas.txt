@@ -1,0 +1,25 @@
+TestCase
+
+1. Opening a file
+    Inserting test cases with inserting the right file names
+
+2. Possibly use sample data as a verifying data
+
+3. Create a test case to see if astar chooses correct heuristics distance
+    That is, create a sample test data where it splits the path into 2 paths.
+    1 path should weight more in total than the other path.
+    However, create data so that heaviest path costs the least when the journey is early.
+
+4. Test makeheap and siftUp
+    4.1 Test the siftUp
+    4.2 Test the makeheap
+
+5. Test incorrect input data
+    5.1 File that doesn't specify vertices + edges
+    5.2 File where no. of vertices != vertices listed
+    5.3 File where no. of edges != edges listed
+    5.4 Where the file doesn't specify start or end goal
+
+6. Cycle in the graph - this will cause infinite data and program to loop?
+
+7. Graph that isn't completed

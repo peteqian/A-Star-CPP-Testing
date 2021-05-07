@@ -1,0 +1,2 @@
+﻿  test.cpp
+E:\Coding Projects\CSIT314-Unit-Testing\googleTest\googleTest\googleTest\test.cpp(18,1): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "pch.h"' to your source?

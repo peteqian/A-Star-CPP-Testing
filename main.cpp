@@ -1,10 +1,11 @@
 #include <iostream>
-#include "ass2-refactor.cpp"
+#include "ass3-refactor.cpp"
 
 using namespace std;
 
 int main(){
-  Sim sim;
+  Simulation sim;
+  sim.openFile("Ass3.txt");
   sim.run();
   return 0;
 }
