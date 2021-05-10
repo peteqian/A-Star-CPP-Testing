@@ -13,5 +13,4 @@ target_link_libraries(${This} PUBLIC
 add_test(
     NAME ${This}
     COMMAND ${This}
-    *.txt
 )

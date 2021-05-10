@@ -42,6 +42,7 @@ class Simulation{
         int startVertex, goalVertex;
         string fileName = "";
     public:
+        Simulation(){}
         int openFile(const char* fileName);
         int run();
         int astar();
