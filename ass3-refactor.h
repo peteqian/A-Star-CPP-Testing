@@ -41,14 +41,8 @@ class Simulation{
         int nVertices;
         int startVertex, goalVertex;
         string fileName = "";
-    public:
-        Simulation(){}
-        int openFile(const char* fileName);
-        int run();
-        int astar();
-        void makeheap(int *heap, int heapSize);
-        void siftUp(int *heap, int i);
-        void siftDown (int *heap, int heapSize, int i);
+        int id, nEdges;
+        int id_tracker = 0;
 
         // Report shortest Path information
         int *path;
@@ -61,6 +55,18 @@ class Simulation{
         int from, to;
         int nPath2Vertices;
         int *path2;
+
+    public:
+        Simulation(){}
+        int openFile(const char* fileName);
+        int readFile();
+        int run();
+        int astar();
+        void makeheap(int *heap, int heapSize);
+        void siftUp(int *heap, int i);
+        void siftDown (int *heap, int heapSize, int i);
+
+        
 };
 
 #endif

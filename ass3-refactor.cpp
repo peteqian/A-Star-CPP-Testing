@@ -13,11 +13,8 @@ int Simulation::openFile(const char* fileName){
     return 1;
 }
 
-int Simulation::run(){
-    
+int Simulation::readFile(){
 
-    int id, nEdges;
-    int id_tracker = 0;
 
     // Read into number of vertices and edges from top line of sample data
     fin >> nVertices >> nEdges;
@@ -43,6 +40,7 @@ int Simulation::run(){
     }
 
     //cout << "Finished reading vertices and their x-y coordinates." << endl;
+    
 
     edgeWeight = new double*[nVertices];
 
@@ -79,6 +77,76 @@ int Simulation::run(){
     startVertex--;
     goalVertex--;
 
+    return 0;
+}
+
+int Simulation::run(){
+    
+
+    
+
+    /*
+    // Read into number of vertices and edges from top line of sample data
+    fin >> nVertices >> nEdges;
+
+    // Initialize the data
+    vertices = new vertex[nVertices];
+    for(int i = 0; i < nVertices; i++){
+        fin >> id >> vertices[i].xCoordinate >> vertices[i].yCoordinate;
+
+        // Compare id_track (previous id) with newly read id
+        if (id_tracker < id){
+            id_tracker = id;
+        } else {
+            cerr << "Previous Id is higher than current id. This may mean the order of read in data is wrong." << endl;
+            return 0;
+        }
+
+        // With this condition, the program cannot accept negative coordinates
+        if(vertices[i].xCoordinate < 0 || vertices[i].yCoordinate < 0){
+            cerr << "Cannot input negative coordinates." << endl;
+            return 0;
+        }
+    }
+
+    //cout << "Finished reading vertices and their x-y coordinates." << endl;
+    
+
+    edgeWeight = new double*[nVertices];
+
+    for (int i = 0; i < nVertices; i++){
+        edgeWeight[i] = new double[nVertices];
+    }
+
+    for (int row = 0; row < nVertices; row++){
+        for (int col = 0; col < nVertices; col++){
+            edgeWeight[row][col] = HUGE_VAL;
+        }
+    }
+    
+    //cout << "Finished reading edges." << endl;
+    
+    int row, col;
+
+    // Account for duplicate paths. Since graph is non-directed, store both [i][j] and [j][i] weights.
+    for (int i = 0; i < nEdges;i++){
+        fin >> row >> col >> edgeWeight[row-1][col-1];
+        row--;
+        col--;
+        if (edgeWeight[row][col] < edgeWeight[col][row]){
+            edgeWeight[col][row] = edgeWeight[row][col];
+        } else {
+            edgeWeight[row][col] = edgeWeight[row][col];
+        }
+    }
+
+    //cout << "Finished fixing edges to create non-directed graph." << endl;
+
+    // Read start and goal vertex and calculate heuristics for each vertex.
+    fin >> startVertex >> goalVertex;
+    startVertex--;
+    goalVertex--;
+    */
     // Find shortest path
     int status = 0;
 
