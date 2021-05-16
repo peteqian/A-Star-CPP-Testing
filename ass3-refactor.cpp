@@ -15,7 +15,7 @@ int Simulation::openFile(const char* fileName){
 
 int Simulation::readFile(){
 
-
+    //cout << "Reading File" << endl;
     // Read into number of vertices and edges from top line of sample data
     fin >> nVertices >> nEdges;
 
@@ -23,7 +23,7 @@ int Simulation::readFile(){
     vertices = new vertex[nVertices];
     for(int i = 0; i < nVertices; i++){
         fin >> id >> vertices[i].xCoordinate >> vertices[i].yCoordinate;
-
+        
         // Compare id_track (previous id) with newly read id
         if (id_tracker < id){
             id_tracker = id;
@@ -53,14 +53,15 @@ int Simulation::readFile(){
             edgeWeight[row][col] = HUGE_VAL;
         }
     }
-    
-    //cout << "Finished reading edges." << endl;
-    
+
     int row, col;
 
+    
     // Account for duplicate paths. Since graph is non-directed, store both [i][j] and [j][i] weights.
     for (int i = 0; i < nEdges;i++){
+        //cout << i << endl;
         fin >> row >> col >> edgeWeight[row-1][col-1];
+        //cout << "row: " << row << "\tcol: " << col << "\tedge: " << edgeWeight[row-1][col-1] << endl;
         row--;
         col--;
         if (edgeWeight[row][col] < edgeWeight[col][row]){
@@ -68,15 +69,42 @@ int Simulation::readFile(){
         } else {
             edgeWeight[row][col] = edgeWeight[row][col];
         }
-    }
 
-    //cout << "Finished fixing edges to create non-directed graph." << endl;
+    }
+    /*
+    int i = 0;
+    while(i < nEdges){
+        //cout << "id: "<< i << endl;
+        try{
+            fin >> row >> col >> edgeWeight[row-1][col-1];
+            //cout << "row: " << row << "\tcol: " << col << "\tedge: " << edgeWeight[row-1][col-1] << endl;
+        } catch (std::exception& e) {
+            cerr << "Exception: " << e.what() << endl;
+        }
+        
+        row--;
+        col--;
+        if (edgeWeight[row][col] < edgeWeight[col][row]){
+            edgeWeight[col][row] = edgeWeight[row][col];
+        } else {
+            edgeWeight[row][col] = edgeWeight[row][col];
+        }
+        i++;
+    }
+    */
+    cout << "Finished fixing edges to create non-directed graph." << endl;
 
     // Read start and goal vertex and calculate heuristics for each vertex.
+    
     fin >> startVertex >> goalVertex;
     startVertex--;
     goalVertex--;
-
+    
+    if(fin.eof()){ 
+        cout << "Haven't reached the end of the file." << endl;
+        return 1;
+    }
+    
     return 0;
 }
 

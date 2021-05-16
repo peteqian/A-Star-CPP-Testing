@@ -4,12 +4,6 @@
 
 using namespace std;
 
-class SimulationTest : public::testing::Test{
-    protected:
-        SimulationTest() = default;
-        Simulation simulation;
-};
-
 class SimulationFile : public::testing::Test {
 
     protected:
@@ -57,6 +51,13 @@ TEST_F(SimulationFile, openCreatedFile){
 TEST_F(SimulationFile, openNonCreatedFile){
     const char* fileName = "NonCreatedFile.txt";
     ASSERT_EQ(0,simulation->openFile(fileName));
+}
+
+TEST_F(SimulationFile, workingRun){
+    const char* fileName = "Ass3.txt";
+    simulation->openFile(fileName);
+    simulation->readFile();
+    ASSERT_EQ(0,simulation->run());
 }
 
 int main(int argc, char **argv){
