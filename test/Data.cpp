@@ -39,7 +39,7 @@ void Data::writeVertices(const char* fileName){
     srand(time(NULL));
 
     no_of_vertices = rand() % 5 + 1;
-    no_of_edges = no_of_vertices +1;
+    no_of_edges = no_of_vertices-1;
     // Writes: number_of_vertices \t
     MyFile << no_of_vertices << "\t" << no_of_edges << endl;
 
@@ -53,7 +53,7 @@ void Data::writeVertices(const char* fileName){
 
 void Data::writeCompletePath(){
 
-    // Function does not write the correct amount of edges as specified on Line:1 in the file.
+    // Function does write the correct amount of edges as specified on Line:1 in the file.
     for(int i = 1; i < no_of_edges; i++){
         MyFile << i << "\t" << i+1 << "\t" << 1 << endl; 
     }
@@ -93,7 +93,7 @@ void Data::writeBadData(){
 
 TEST_F(Data, InCompletedPath){
     
-    const char* file = "InCompletePath.txt";
+    const char* file = "InCompletedPath.txt";
     writeVertices(file);
     writeInCompletePath();
     simulation->openFile(file);

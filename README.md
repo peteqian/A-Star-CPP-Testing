@@ -20,3 +20,7 @@ If you encounter errors with building. My only solution so far is to reconfigure
 Create TestCases within ../test/SimTests.cpp
 
 Documentation of test case creation can be found [here](https://google.github.io/googletest/).
+
+
+## Running your tests
+Play Button in VScode, good luck if you're using anything else cause I ain't.

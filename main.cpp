@@ -5,7 +5,7 @@ using namespace std;
 
 int main(){
   Simulation sim;
-  sim.openFile("CompletedPath.txt");
+  sim.openFile("InCompletedPath.txt");
   sim.readFile();
   sim.run();
   return 0;

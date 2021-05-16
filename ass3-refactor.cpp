@@ -15,9 +15,11 @@ int Simulation::openFile(const char* fileName){
 
 int Simulation::readFile(){
 
-    //cout << "Reading File" << endl;
+    //cout << "Reading File" << endl;                                                                                           \\ Debug
     // Read into number of vertices and edges from top line of sample data
     fin >> nVertices >> nEdges;
+
+    //cout << "nVertices: " << nVertices << "\tnEdges: " << nEdges << endl;                                                     \\ Debug
 
     // Initialize the data
     vertices = new vertex[nVertices];
@@ -39,7 +41,7 @@ int Simulation::readFile(){
         }
     }
 
-    cout << "Finished reading vertices and their x-y coordinates." << endl;
+    //cout << "Finished reading vertices and their x-y coordinates." << endl;                                                   \\ Debug
     
 
     edgeWeight = new double*[nVertices];
@@ -56,15 +58,25 @@ int Simulation::readFile(){
 
     int row, col;
 
-    cout << "nEdges: " << nEdges << endl;
     // Account for duplicate paths. Since graph is non-directed, store both [i][j] and [j][i] weights.
     for (int i = 0; i < nEdges;i++){
-        cout << "id: " << i << endl;
-        fin >> row >> col >> edgeWeight[row-1][col-1];
-        cout << "row: " << row << "\tcol: " << col << "\tedge: " << edgeWeight[row-1][col-1] << endl;
+       
+        fin >> row >> col;
+        //cout << "row: " << row << "\tcol: " << col <<"\tweight: ";                                                            \\ Debug
+
+        if(row > nVertices || col > nVertices){
+            cout << "You cannot insert an edge with vertex that doesn't exist." << endl;
+            return 1;
+        }
+
+        // Feed in edge weight afterwards
+        fin >> edgeWeight[row-1][col-1];
+        //cout << edgeWeight[row-1][col-1]  << endl;                                                                            \\ Debug
+        
         row--;
         col--;
-        //cout << "row: " << row << "\tcol: " << col << "\tedge: " << edgeWeight[row-1][col-1] << endl;
+
+
         if (edgeWeight[row][col] < edgeWeight[col][row]){
             edgeWeight[col][row] = edgeWeight[row][col];
         } else {
@@ -73,14 +85,15 @@ int Simulation::readFile(){
 
     }
     
-    cout << "Finished fixing edges to create non-directed graph." << endl;
+    //cout << "Finished fixing edges to create non-directed graph." << endl;                                                    \\ Debug
 
     // Read start and goal vertex and calculate heuristics for each vertex.
     
     fin >> startVertex >> goalVertex;
     startVertex--;
     goalVertex--;
-    
+    //cout << "Starting Vertex: " << startVertex << "\t Goal Vertex: " << goalVertex << endl;                                   \\ Debug
+
     if(fin.eof()){ 
         cout << "Haven't reached the end of the file." << endl;
         return 1;
@@ -88,6 +101,9 @@ int Simulation::readFile(){
     
     return 0;
 }
+
+
+
 
 int Simulation::run(){
     
