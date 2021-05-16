@@ -39,7 +39,7 @@ int Simulation::readFile(){
         }
     }
 
-    //cout << "Finished reading vertices and their x-y coordinates." << endl;
+    cout << "Finished reading vertices and their x-y coordinates." << endl;
     
 
     edgeWeight = new double*[nVertices];
@@ -56,14 +56,15 @@ int Simulation::readFile(){
 
     int row, col;
 
-    
+    cout << "nEdges: " << nEdges << endl;
     // Account for duplicate paths. Since graph is non-directed, store both [i][j] and [j][i] weights.
     for (int i = 0; i < nEdges;i++){
-        //cout << i << endl;
+        cout << "id: " << i << endl;
         fin >> row >> col >> edgeWeight[row-1][col-1];
-        //cout << "row: " << row << "\tcol: " << col << "\tedge: " << edgeWeight[row-1][col-1] << endl;
+        cout << "row: " << row << "\tcol: " << col << "\tedge: " << edgeWeight[row-1][col-1] << endl;
         row--;
         col--;
+        //cout << "row: " << row << "\tcol: " << col << "\tedge: " << edgeWeight[row-1][col-1] << endl;
         if (edgeWeight[row][col] < edgeWeight[col][row]){
             edgeWeight[col][row] = edgeWeight[row][col];
         } else {
@@ -71,27 +72,7 @@ int Simulation::readFile(){
         }
 
     }
-    /*
-    int i = 0;
-    while(i < nEdges){
-        //cout << "id: "<< i << endl;
-        try{
-            fin >> row >> col >> edgeWeight[row-1][col-1];
-            //cout << "row: " << row << "\tcol: " << col << "\tedge: " << edgeWeight[row-1][col-1] << endl;
-        } catch (std::exception& e) {
-            cerr << "Exception: " << e.what() << endl;
-        }
-        
-        row--;
-        col--;
-        if (edgeWeight[row][col] < edgeWeight[col][row]){
-            edgeWeight[col][row] = edgeWeight[row][col];
-        } else {
-            edgeWeight[row][col] = edgeWeight[row][col];
-        }
-        i++;
-    }
-    */
+    
     cout << "Finished fixing edges to create non-directed graph." << endl;
 
     // Read start and goal vertex and calculate heuristics for each vertex.

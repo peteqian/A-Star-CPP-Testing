@@ -28,6 +28,7 @@ class Data : public::testing::Test {
     public:
         void writeVertices(const char* fileName);
         void writeBadData();
+        void writeCompletePath();
         void writeInCompletePath();
 };
 
@@ -50,13 +51,21 @@ void Data::writeVertices(const char* fileName){
     }
 }
 
+void Data::writeCompletePath(){
+
+    // Function does not write the correct amount of edges as specified on Line:1 in the file.
+    for(int i = 1; i < no_of_edges; i++){
+        MyFile << i << "\t" << i+1 << "\t" << 1 << endl; 
+    }
+    MyFile << no_of_edges << "\t" << no_of_edges << "\t" << 1 << endl; 
+    MyFile << 1 << "\t" << no_of_edges << endl;
+    MyFile.close();
+}
+
 void Data::writeInCompletePath(){
 
     // Function does not write the correct amount of edges as specified on Line:1 in the file.
-
-    int nodeStart = 1;
-
-    for(int i = nodeStart; i < no_of_edges; i++){
+    for(int i = 1; i < no_of_edges; i++){
         MyFile << i << "\t" << i+1 << "\t" << 1 << endl; 
     }
     MyFile << 1 << "\t" << no_of_edges << endl;
@@ -67,13 +76,11 @@ void Data::writeInCompletePath(){
 void Data::writeBadData(){
     srand(time(NULL));
 
-
     int nodeStart = 1;
     // Connect the nodes
     while(nodeStart <= no_of_edges){
         // Node \t posX \t posY
         int nodeEnd = rand() % 10 + 2;
-
         if( nodeStart < nodeEnd ){
             MyFile << nodeStart++ << "\t" << nodeEnd << "\t" << 1 << endl;
         } else {
@@ -91,5 +98,25 @@ TEST_F(Data, InCompletedPath){
     writeInCompletePath();
     simulation->openFile(file);
     ASSERT_DEATH(simulation->readFile(), "");
+   
+}
+
+TEST_F(Data, CompletedPath){
+    
+    const char* file = "CompletedPath.txt";
+    writeVertices(file);
+    writeCompletePath();
+    simulation->openFile(file);
+    simulation->readFile();
+    ASSERT_EQ(0,simulation->run());
+}
+
+TEST_F(Data, BadData){
+    
+    const char* file = "BadData.txt";
+    writeVertices(file);
+    writeBadData();
+    simulation->openFile(file);
+    simulation->readFile();
    
 }
