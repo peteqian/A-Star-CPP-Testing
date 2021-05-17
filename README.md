@@ -56,7 +56,7 @@ As for the test cases. You can either separate your test cases into a new file i
 When creating a separate file for tests. You must:
 1. Edit the CMakeLists.txt located in the test folder 
 > CSIT314/test/CMakeLists.txt
-2. Then edit on line 5 to add your new file:
+2. Then edit on line 5 to add your new file to ensure that cmake has linked the files and libraries together:
 > set(Sources SimTests.cpp Data.cpp >insert_your_new_file_here<)
 
 
