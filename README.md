@@ -8,7 +8,7 @@ In order to execute test cases, you must install the following pre-requisites:
 2. C/C++ (VSCode Extension)
 
 If you encounter errors with CMake path. Ensure your settings are correct, check main page of CMake via VSCode. 
-Or, download from https://cmake.org/
+Or, alternatively download from https://cmake.org/ and install into directory you can locate.
 
 ## Build set-up.
 
@@ -23,4 +23,12 @@ Documentation of test case creation can be found [here](https://google.github.io
 
 
 ## Running your tests
-Play Button in VScode, good luck if you're using anything else cause I ain't.
+1. If you're working VSCode, there is a play button on the bottom.
+2. Will update for other environments if needed.
+
+## Making changes to the source code.
+The source code is located in ass3-refactor.cpp and ass3-refactor.h.
+
+# Notes:
+1. The executable of the test program is built in build/test. Any files you create in your test code will be located in this directory.
+2. The files in the home directory are just for static test data to remove annoying randomness involved in generating the test data.
