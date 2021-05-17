@@ -34,7 +34,7 @@ Documentation of test case creation can be found [here](https://google.github.io
 
 ## Making changes to the source code.
 For the actual program, the source code is located in ass3-refactor.cpp and ass3-refactor.h.
-As for the test cases. You can either separate your test cases into a new file in the home/test/ directory or work in an existing file. Preferably separate test case for cod readability.
+As for the test cases. You can either separate your test cases into a new file in the home/test/ directory or work in an existing file. Preferably separate test case for code readability.
 
 # Notes:
 1. The executable of the test program is built in build/test. Any files you create in your test code will be located in this directory.
