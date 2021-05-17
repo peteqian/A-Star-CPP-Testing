@@ -23,11 +23,18 @@ Documentation of test case creation can be found [here](https://google.github.io
 
 
 ## Running your tests
-1. If you're working VSCode, there is a play button on the bottom.
-2. Will update for other environments if needed.
+1. Firstly, ensure the file you're working must include in the headers:
+> #include "../ass3-refactor.h"
+> 
+> #include <gtest/gtest.h>
+2. Do not re-declare, as compiler will complain. Technically, this shouldn't need to be be declared at all. It is automatically generated within the libraries.
+> int main(int argc, char **argv)
+4. If you're working VSCode, there is a play button on the bottom.
+5. Will update for other environments if needed.
 
 ## Making changes to the source code.
-The source code is located in ass3-refactor.cpp and ass3-refactor.h.
+For the actual program, the source code is located in ass3-refactor.cpp and ass3-refactor.h.
+As for the test cases. You can either separate your test cases into a new file in the home/test/ directory or work in an existing file. Preferably separate test case for easier class separation.
 
 # Notes:
 1. The executable of the test program is built in build/test. Any files you create in your test code will be located in this directory.
