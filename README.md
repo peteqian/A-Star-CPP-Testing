@@ -40,12 +40,15 @@ Documentation of test case creation can be found [here](https://google.github.io
 > int main(int argc, char **argv)
 
 ## Windows
-1. If you're working VSCode, there is a play button on the bottom.
+1. The executable of the test program is built in build/test. Progream DOES read from build/test directory for any test data.
+2. The files in the home directory are just for static test data to remove annoying randomness involved in generating the test data for debugging the test case functionality. This should not be tested in the final production.
+3. If you're working VSCode, there is a play button on the bottom.
 
 ## Unix
 1. Ensure you have saved your source code files.
 2. Run the make command in the build directory
 > $ cd ./build && make
+3. For any test data, the program DOES NOT read from build/test directory for any test data AND MUST READ FROM build/
 3. Then run the program
 > ./build/test/SimTests
 
@@ -58,8 +61,3 @@ When creating a separate file for tests. You must:
 > CSIT314/test/CMakeLists.txt
 2. Then edit on line 5 to add your new file to ensure that cmake has linked the files and libraries together:
 > set(Sources SimTests.cpp Data.cpp >insert_your_new_file_here<)
-
-
-# Notes:
-1. The executable of the test program is built in build/test. Any files you create in your test code will be located in this directory.
-2. The files in the home directory are just for static test data to remove annoying randomness involved in generating the test data for debugging the test case functionality. This should not be tested in the final production.
