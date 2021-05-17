@@ -39,18 +39,18 @@ class SimulationFile : public::testing::Test {
 };
 
 TEST_F(SimulationFile, openExistingFile){
-    ASSERT_EQ(1,simulation->openFile("Ass3.txt"));
+    ASSERT_EQ(0,simulation->openFile("Ass3.txt"));
 }
 
 TEST_F(SimulationFile, openCreatedFile){
     const char* fileName = "CreatedFile.txt";
     createFile(fileName);
-    ASSERT_EQ(1,simulation->openFile(fileName));
+    ASSERT_EQ(0,simulation->openFile(fileName));
 }
 
 TEST_F(SimulationFile, openNonCreatedFile){
     const char* fileName = "NonCreatedFile.txt";
-    ASSERT_EQ(0,simulation->openFile(fileName));
+    ASSERT_EQ(1,simulation->openFile(fileName));
 }
 
 TEST_F(SimulationFile, workingRun){

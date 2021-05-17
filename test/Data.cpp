@@ -74,18 +74,15 @@ void Data::writeInCompletePath(){
 
 
 void Data::writeBadData(){
-    srand(time(NULL));
+    // Function writes non-int values
+    char c;
+    int r;
 
-    int nodeStart = 1;
-    // Connect the nodes
-    while(nodeStart <= no_of_edges){
-        // Node \t posX \t posY
-        int nodeEnd = rand() % 10 + 2;
-        if( nodeStart < nodeEnd ){
-            MyFile << nodeStart++ << "\t" << nodeEnd << "\t" << 1 << endl;
-        } else {
-            MyFile << nodeStart++ << "\t" << "A" << "\t" << 1 << endl;
-        }
+    srand (time(NULL));    // initialize the random number generator
+    for(int i = 1; i < no_of_edges; i++){
+        r = rand()%26;
+        c = 'a' + r;
+        MyFile << i << "\t" << c << "\t" << 1 << endl; 
     }
     MyFile << 1 << "\t" << no_of_vertices << endl;
     MyFile.close();
