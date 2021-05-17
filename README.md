@@ -43,7 +43,7 @@ Documentation of test case creation can be found [here](https://google.github.io
 1. If you're working VSCode, there is a play button on the bottom.
 
 ## Unix
-1. Ensure you have saved your source code files are saved.
+1. Ensure you have saved your source code files.
 2. Run the make command in the build directory
 > $ cd ./build && make
 3. Then run the program
