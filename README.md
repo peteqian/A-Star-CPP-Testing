@@ -31,4 +31,4 @@ The source code is located in ass3-refactor.cpp and ass3-refactor.h.
 
 # Notes:
 1. The executable of the test program is built in build/test. Any files you create in your test code will be located in this directory.
-2. The files in the home directory are just for static test data to remove annoying randomness involved in generating the test data.
+2. The files in the home directory are just for static test data to remove annoying randomness involved in generating the test data for debugging the test case functionality. This should not be tested in the final production.
