@@ -17,7 +17,7 @@ Or, alternatively download from https://cmake.org/ and install into directory yo
 2. Select a CMake kit with a compiler of your choice. This may be mwing/Visual Studio 2019 x86/x64 architecture.
 3. Once you've downloaded CSIT314 Folder from the repos
 4. Build
-5. Play
+5. Make/Play (Play button in VSCode)
 
 If you encounter errors with building. My only solution so far is to reconfigure your compiler with another C/C++ compiler.
 
@@ -31,9 +31,8 @@ Documentation of test case creation can be found [here](https://google.github.io
 3. Once you've downloaded CSIT314 Folder from the repos
 4. Create a build directory 
 > mkdir build
-5. Change to build
-> cmake ../
-> make
+5. Change to build and make
+> cmake ../ && make
 
 # Running your tests
 1. Firstly, ensure the file you're working must include in the headers:
