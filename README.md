@@ -21,7 +21,7 @@ Or, alternatively download from https://cmake.org/ and install into directory yo
 
 If you encounter errors with building. My only solution so far is to reconfigure your compiler with another C/C++ compiler.
 
-Create TestCases within ../test/SimTests.cpp
+Create TestCases within ```../test/SimTests.cpp```
 
 Documentation of test case creation can be found [here](https://google.github.io/googletest/).
 
@@ -43,7 +43,7 @@ Documentation of test case creation can be found [here](https://google.github.io
 > int main(int argc, char **argv)
 
 ## Windows
-1. The executable of the test program is built in build/test. Program READS from build/test directory for any TEST DATA.
+1. The executable of the test program is built in ```build/test```. Program READS from build/test directory for any TEST DATA.
 2. The files in the home directory are just for static test data to remove annoying randomness involved in generating the test data for debugging the test case functionality. This should not be tested in the final production.
 3. If you're working VSCode, there is a play button on the bottom.
 
@@ -51,7 +51,7 @@ Documentation of test case creation can be found [here](https://google.github.io
 1. Ensure you have saved your source code files.
 2. Run the make command in the build directory
 > $ cd ./build && make
-3. For any test data, the program DOES NOT READ from build/test directory for any TEST DATA AND MUST READ FROM build/
+3. For any test data, the program DOES NOT READ from ```build/test``` directory for any TEST DATA AND MUST READ FROM ```build/```
 3. Then run the program
 > ./build/test/SimTests
 
@@ -60,7 +60,7 @@ For the actual program, the source code is located in ass3-refactor.cpp and ass3
 As for the test cases. You can either separate your test cases into a new file in the home/test/ directory or work in an existing file. Preferably separate test case for code readability.
 
 When creating a separate file for tests. You must:
-1. Edit the CMakeLists.txt located in the test folder 
+1. Edit the ```CMakeLists.txt``` located in the test folder 
 > CSIT314/test/CMakeLists.txt
 2. Then edit on line 5 to add your new file to ensure that cmake has linked the files and libraries together:
 > set(Sources SimTests.cpp Data.cpp >insert_your_new_file_here<)
