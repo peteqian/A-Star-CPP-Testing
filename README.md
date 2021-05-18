@@ -13,8 +13,11 @@ Or, alternatively download from https://cmake.org/ and install into directory yo
 # Build set-up.
 ## Windows
 
-1. Configure CMake with a C/C++ compiler. This may be mwing/Visual Studio 2019 x86/x64 architecture.
-2. Press F7 to build.
+1. Download and install CMake
+2. Select a CMake kit with a compiler of your choice. This may be mwing/Visual Studio 2019 x86/x64 architecture.
+3. Once you've downloaded CSIT314 Folder from the repos
+4. Build
+5. Play
 
 If you encounter errors with building. My only solution so far is to reconfigure your compiler with another C/C++ compiler.
 
@@ -24,10 +27,11 @@ Documentation of test case creation can be found [here](https://google.github.io
 
 ## Unix (Mac OSX, Ubuntu)
 1. Download and install CMake
-2. Once you've downloaded CSIT314 Folder from the repos
-3. Create a build directory 
+2. Configure CMake with your default gcc compiler. Clang for Mac OSX and GCC x86_64-linux-gnu for Ubuntu 20.04.
+3. Once you've downloaded CSIT314 Folder from the repos
+4. Create a build directory 
 > mkdir build
-4. Change to build
+5. Change to build
 > cmake ../
 > make
 
