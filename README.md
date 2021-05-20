@@ -11,6 +11,7 @@ If you encounter errors with CMake. Ensure your settings are correct, check main
 Or, alternatively download from https://cmake.org/ and install into directory you can locate.
 
 Add to PATH the ```compiler/bin``` folder.
+
 Add to PATH the ```/path/to/your/cmake/bin``` folder.
 
 # Build set-up.
