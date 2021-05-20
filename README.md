@@ -14,6 +14,8 @@ Add to PATH the ```compiler/bin``` folder.
 
 Add to PATH the ```/path/to/your/cmake/bin``` folder.
 
+Pancakes
+
 # Build set-up.
 ## Windows
 
