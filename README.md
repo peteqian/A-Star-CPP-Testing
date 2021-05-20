@@ -1,6 +1,8 @@
 # CSIT314
 CSIT314 - Unit Testing
 
+# Installation 
+
 The program can be executed using VSCode using Windows 10.
 In order to execute test cases, you must install the following pre-requisites:
 
@@ -10,11 +12,8 @@ In order to execute test cases, you must install the following pre-requisites:
 If you encounter errors with CMake. Ensure your settings are correct, check main page of CMake via VSCode. 
 Or, alternatively download from https://cmake.org/ and install into directory you can locate.
 
-Add to PATH the ```compiler/bin``` folder.
+Add to PATH the ```compiler/bin``` folder and ```/path/to/your/cmake/bin``` folder. Ensure both are added.
 
-Add to PATH the ```/path/to/your/cmake/bin``` folder.
-
-Pancakes
 
 # Build set-up.
 ## Windows
