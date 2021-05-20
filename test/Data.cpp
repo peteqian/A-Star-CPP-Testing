@@ -32,6 +32,7 @@ class Data : public::testing::Test {
         void writeInCompletePath();
 };
 
+// Function writes the vertices into a data file only.
 void Data::writeVertices(const char* fileName){
 
     MyFile.open(fileName);
@@ -40,6 +41,7 @@ void Data::writeVertices(const char* fileName){
 
     no_of_vertices = rand() % 5 + 1;
     no_of_edges = no_of_vertices-1;
+    
     // Writes: number_of_vertices \t
     MyFile << no_of_vertices << "\t" << no_of_edges << endl;
 
@@ -51,9 +53,8 @@ void Data::writeVertices(const char* fileName){
     }
 }
 
+// Function does write the correct amount of edges as specified on Line:1 in the file.
 void Data::writeCompletePath(){
-
-    // Function does write the correct amount of edges as specified on Line:1 in the file.
     for(int i = 1; i < no_of_edges; i++){
         MyFile << i << "\t" << i+1 << "\t" << 1 << endl; 
     }
@@ -62,9 +63,8 @@ void Data::writeCompletePath(){
     MyFile.close();
 }
 
+// Function does not write the correct amount of edges as specified on Line:1 in the file.
 void Data::writeInCompletePath(){
-
-    // Function does not write the correct amount of edges as specified on Line:1 in the file.
     for(int i = 1; i < no_of_edges; i++){
         MyFile << i << "\t" << i+1 << "\t" << 1 << endl; 
     }
@@ -74,13 +74,11 @@ void Data::writeInCompletePath(){
 
 
 void Data::writeBadData(){
-    // Function writes non-int values
     char c;
     int r;
-
-    srand (time(NULL));    // initialize the random number generator
+    srand (time(NULL));                                                 // initialize the random number generator
     for(int i = 1; i < no_of_edges; i++){
-        r = rand()%26;
+        r = rand()%26;                                                  // Function writes random letters from the alphabet
         c = 'a' + r;
         MyFile << i << "\t" << c << "\t" << 1 << endl; 
     }
@@ -89,13 +87,12 @@ void Data::writeBadData(){
 }
 
 TEST_F(Data, InCompletedPath){
-    
     const char* file = "InCompletedPath.txt";
     writeVertices(file);
     writeInCompletePath();
     simulation->openFile(file);
-    ASSERT_DEATH(simulation->readFile(), "");
-   
+    //ASSERT_DEATH(simulation->readFile(), "");
+    ASSERT_EQ(1,simulation->readFile());
 }
 
 TEST_F(Data, CompletedPath){

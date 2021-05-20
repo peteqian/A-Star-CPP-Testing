@@ -7,3 +7,19 @@
 2	9	1
 3	C	1
 1	4
+
+nVertices nEdges
+vertex posX posY
+vertex posX posY
+vertexOne vertexTwo edgeWeight
+vertexTwo vertexThree edgeWeight
+startingVertex GoalVertex
+
+4 2
+1   
+2
+3
+4
+1 2
+2 3
+1 4

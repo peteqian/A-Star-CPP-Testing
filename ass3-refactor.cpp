@@ -191,7 +191,7 @@ int Simulation::run(){
     startVertex--;
     goalVertex--;
     */
-   
+
     // Find shortest path
     int status = 0;
 
@@ -337,6 +337,13 @@ int Simulation::astar(){
 
     return 1;
 }
+
+
+/*
+    void printHeap(){
+
+    }
+*/
 
 void Simulation::makeheap(int *heap, int heapSize){
     for (int i = heapSize/2; i >= 0; i--){
