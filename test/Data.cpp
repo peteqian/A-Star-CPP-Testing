@@ -30,6 +30,7 @@ class Data : public::testing::Test {
         void writeBadData();
         void writeCompletePath();
         void writeInCompletePath();
+        void writeDuplicateEdge();
 };
 
 void Data::writeVertices(const char* fileName){
@@ -86,6 +87,28 @@ void Data::writeBadData(){
     }
     MyFile << 1 << "\t" << no_of_vertices << endl;
     MyFile.close();
+}
+
+void Data::writeDuplicateEdge(){
+   int r, s, weight;
+   srand(time(NULL));
+   for(int i = 1; i < no_of_edges; i++){
+      r = rand()%no_of_vertices + 1;
+      s = rand()%no_of_vertices + 1;
+      weight = rand()%50 + 1;
+      MyFile << r << "\t" << s << "\t" << 1 << endl; 
+    }
+    MyFile << s << "\t" << r << "\t" << 100 << endl; 
+    MyFile << 1 << "\t" << no_of_edges << endl;
+    MyFile.close();
+}
+
+TEST_F(Data, DuplicateEdge){
+   const char* file = "DuplicateEdge.txt";
+   writeVertices(file);
+   writeDuplicateEdge();
+   simulation->openFile(file);
+   ASSERT_DEATH(simulation->readFile(), "");
 }
 
 TEST_F(Data, InCompletedPath){
