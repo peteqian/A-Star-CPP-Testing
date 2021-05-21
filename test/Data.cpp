@@ -108,7 +108,7 @@ TEST_F(Data, DuplicateEdge){
    writeVertices(file);
    writeDuplicateEdge();
    simulation->openFile(file);
-   ASSERT_DEATH(simulation->readFile(), "");
+   ASSERT_EG(2, simulation->readFile());
 }
 
 TEST_F(Data, InCompletedPath){
