@@ -101,7 +101,7 @@ int Simulation::readFile(){
         if (edgeWeight[row][col] < edgeWeight[col][row]){
             edgeWeight[col][row] = edgeWeight[row][col];
         } else {
-            edgeWeight[row][col] = edgeWeight[row][col];
+            edgeWeight[row][col] = edgeWeight[col][row];
         }
 
     }

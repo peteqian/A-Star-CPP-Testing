@@ -88,15 +88,10 @@ void Data::writeBadData(){
 }
 
 void Data::writeDuplicateEdge(){
-   int r, s, weight;
-   srand(time(NULL));
    for(int i = 1; i < no_of_edges; i++){
-      r = rand()%no_of_vertices + 1;
-      s = rand()%no_of_vertices + 1;
-      weight = rand()%50 + 1;
-      MyFile << r << "\t" << s << "\t" << 1 << endl; 
+        MyFile << i << "\t" << i+1 << "\t" << 1 << endl; 
     }
-    MyFile << s << "\t" << r << "\t" << 100 << endl; 
+    MyFile << no_of_edges << "\t" << no_of_edges-1 << "\t" << 100 << endl; 
     MyFile << 1 << "\t" << no_of_edges << endl;
     MyFile.close();
 }
@@ -106,7 +101,7 @@ TEST_F(Data, DuplicateEdge){
    writeVertices(file);
    writeDuplicateEdge();
    simulation->openFile(file);
-   ASSERT_EG(2, simulation->readFile());
+   ASSERT_EQ(0, simulation->readFile());
 }
 
 TEST_F(Data, InCompletedPath){
