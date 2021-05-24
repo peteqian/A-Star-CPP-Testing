@@ -45,7 +45,7 @@ int Simulation::readFile(){
 
         cout << "id: " << id << "\tvertices[i].xCoordinate: " << vertices[i].xCoordinate << "\tvertices[i].yCoordinate: " << vertices[i].yCoordinate << endl;
 
-///////// Compare id_track (previous id) with newly read id
+        // Compare id_track (previous id) with newly read id
         if (id_tracker < id){
             id_tracker = id;
         } else {
@@ -87,7 +87,6 @@ int Simulation::readFile(){
             return 1;
         }
 
-///////// 
         if(row > nVertices || col > nVertices){
             cerr << "You cannot insert an edge with a vertex that doesn't exist." << endl;
             return 1;
@@ -142,7 +141,6 @@ int Simulation::readFile(){
     startVertex--;
     goalVertex--;
 
-/////////
     if(fin.eof()){ 
         cout << "Haven't reached the end of the file." << endl;
         return 1;
