@@ -15,15 +15,20 @@ int Simulation::openFile(const char* fileName){
 
 int Simulation::readFile(){
 
-    //cout << "Reading File" << endl;                                                                                           //Debug
     // Read into number of vertices and edges from top line of sample data
     fin >> nVertices >> nEdges;
     
-    cout << "nVertices: " << nVertices << "\tnEdges: " << nEdges << endl;                                                     //Debug
+    cout << "nVertices: " << nVertices << "\tnEdges: " << nEdges << endl;
     
     // Output an error if the symbol cannot be read into an int variable
     if(!fin.good()){
-        cerr << "You must enter an int value for the number of vertices and number of edges." << endl;
+        cerr << "You must enter an int value for the number of vertices and/or number of edges." << endl;
+        return 1;
+    }
+
+    // With this condition, the program cannot accept negative number of vertices and number of edges
+    if(nVertices < 0 || nEdges < 0){
+        cerr << "Cannot input negative number of vertices and/or number of edges." << endl;
         return 1;
     }
 
@@ -34,29 +39,26 @@ int Simulation::readFile(){
         
         // Output an error if the symbol cannot be read into an int variable
         if(!fin.good()){
-            cerr << "You must enter an int value for the vertex and the coordinates." << endl;
+            cerr << "You must enter an int value for the vertex and/or the coordinates." << endl;
             return 1;
         }
 
         cout << "id: " << id << "\tvertices[i].xCoordinate: " << vertices[i].xCoordinate << "\tvertices[i].yCoordinate: " << vertices[i].yCoordinate << endl;
 
-        // Compare id_track (previous id) with newly read id
+///////// Compare id_track (previous id) with newly read id
         if (id_tracker < id){
             id_tracker = id;
         } else {
             cerr << "Previous Id is higher than current id. This may mean the order of read in data is wrong." << endl;
-            return 0;
+            return 1;
         }
 
         // With this condition, the program cannot accept negative coordinates
         if(vertices[i].xCoordinate < 0 || vertices[i].yCoordinate < 0){
             cerr << "Cannot input negative coordinates." << endl;
-            return 0;
+            return 1;
         }
     }
-
-    //cout << "Finished reading vertices and their x-y coordinates." << endl;                                                   //Debug
-    
 
     edgeWeight = new double*[nVertices];
 
@@ -77,23 +79,38 @@ int Simulation::readFile(){
        
         fin >> row >> col;
         
-        cout << "row: " << row << "\tcol: " << col;                                                             //Debug                                             
+        cout << "row: " << row << "\tcol: " << col << endl;                                                                                                   
 
-        if(row > nVertices || col > nVertices){
-            cerr << "You cannot insert an edge with vertex that doesn't exist." << endl;
+        // With this condition, the program cannot accept negative edge values
+        if(row < 0 || col < 0){
+            cerr << "Cannot input negative edge values." << endl;
             return 1;
         }
 
+///////// 
+        if(row > nVertices || col > nVertices){
+            cerr << "You cannot insert an edge with a vertex that doesn't exist." << endl;
+            return 1;
+        }
+
+        // Output an error if the symbol cannot be read into an int variable
         if(!fin.good()){
-            cerr << "You must insert int values only for the edge and the weight." << endl;
+            cerr << "You must insert int values only for the edge and/or the weight." << endl;
             return 1;
         }
 
         // Feed in edge weight afterwards
         fin >> edgeWeight[row-1][col-1];
 
-        cout << "\tweight: " << edgeWeight[row-1][col-1]  << endl;                                                                              //Debug
+        cout << "\tweight: " << edgeWeight[row-1][col-1]  << endl;                         
         
+        
+///////// With this condition, the program cannot accept negative edge weight
+        if(edgeWeight[row-1][col-1] < 0){
+            cerr << "Cannot input negative edge weight." << endl;
+            return 1;
+        }
+
         row--;
         col--;
 
@@ -105,16 +122,27 @@ int Simulation::readFile(){
         }
 
     }
-    
-    //cout << "Finished fixing edges to create non-directed graph." << endl;                                                    //Debug
+
 
     // Read start and goal vertex and calculate heuristics for each vertex.
-    
-    fin >> startVertex >> goalVertex;
+    fin >> startVertex >> goalVertex;                                
+
+    // With this condition, the program cannot accept negative start vertex and goal vertex
+    if(startVertex < 0 || goalVertex < 0){
+        cerr << "Cannot input negative edge start vertex and/or goal vertex." << endl;
+        return 1;
+    }
+
+    // Output an error if the symbol cannot be read into an int variable
+    if(!fin.good()){
+        cerr << "You must insert int values only for the edge start vertex and/or goal vertex." << endl;
+        return 1;
+    }
+
     startVertex--;
     goalVertex--;
-    //cout << "Starting Vertex: " << startVertex << "\t Goal Vertex: " << goalVertex << endl;                                   // Debug
 
+/////////
     if(fin.eof()){ 
         cout << "Haven't reached the end of the file." << endl;
         return 1;
