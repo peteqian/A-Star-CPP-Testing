@@ -12,8 +12,13 @@ In order to execute test cases, you must install the following pre-requisites:
 If you encounter errors with CMake. Ensure your settings are correct, check main page of CMake via VSCode. 
 Or, alternatively download from https://cmake.org/ and install into directory you can locate.
 
-Add to PATH the ```compiler/bin``` folder and ```/path/to/your/cmake/bin``` folder. Ensure both are added.
+Add to user environment variables PATH the ```~/path/to/your/compiler/bin``` folder and ```~/path/to/your/cmake/bin``` folder. Ensure both are added.
 
+Check your CMake and compiler has been installed.
+
+```cmake --version```
+
+```g++ --version```
 
 # Build set-up.
 ## Windows
