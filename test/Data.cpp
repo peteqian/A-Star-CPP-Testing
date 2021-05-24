@@ -40,7 +40,7 @@ void Data::writeVertices(const char* fileName){
     cout << "Opened File: " << fileName << endl;
     srand(time(NULL));
 
-    no_of_vertices = rand() % 5 + 1;
+    no_of_vertices = rand() % 10 + 2;
     no_of_edges = no_of_vertices-1;
     
     // Writes: number_of_vertices \t
@@ -87,11 +87,19 @@ void Data::writeBadData(){
     MyFile.close();
 }
 
+/* Needs to be changed*/
 void Data::writeDuplicateEdge(){
-   for(int i = 1; i < no_of_edges; i++){
+
+    for(int i = 1; i < no_of_edges/2; i++){
         MyFile << i << "\t" << i+1 << "\t" << 1 << endl; 
     }
+
     MyFile << no_of_edges << "\t" << no_of_edges-1 << "\t" << 100 << endl; 
+
+    for(int i = no_of_edges/2; i < no_of_edges; i++){
+        MyFile << i << "\t" << i+1 << "\t" << 1 << endl; 
+    }
+
     MyFile << 1 << "\t" << no_of_edges << endl;
     MyFile.close();
 }

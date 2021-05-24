@@ -19,7 +19,7 @@ int Simulation::readFile(){
     // Read into number of vertices and edges from top line of sample data
     fin >> nVertices >> nEdges;
     
-    cout << "nVertices: " << nVertices << "\tnEdges: " << nEdges << endl;                                                     //Debug
+    //cout << "nVertices: " << nVertices << "\tnEdges: " << nEdges << endl;                                                     //Debug
     
     // Output an error if the symbol cannot be read into an int variable
     if(!fin.good()){
@@ -38,7 +38,7 @@ int Simulation::readFile(){
             return 1;
         }
 
-        cout << "id: " << id << "\tvertices[i].xCoordinate: " << vertices[i].xCoordinate << "\tvertices[i].yCoordinate: " << vertices[i].yCoordinate << endl;
+        //cout << "id: " << id << "\tvertices[i].xCoordinate: " << vertices[i].xCoordinate << "\tvertices[i].yCoordinate: " << vertices[i].yCoordinate << endl;
 
         // Compare id_track (previous id) with newly read id
         if (id_tracker < id){
@@ -77,7 +77,7 @@ int Simulation::readFile(){
        
         fin >> row >> col;
         
-        cout << "row: " << row << "\tcol: " << col;                                                             //Debug                                             
+        //cout << "row: " << row << "\tcol: " << col;                                                             //Debug                                             
 
         if(row > nVertices || col > nVertices){
             cerr << "You cannot insert an edge with vertex that doesn't exist." << endl;
@@ -92,7 +92,7 @@ int Simulation::readFile(){
         // Feed in edge weight afterwards
         fin >> edgeWeight[row-1][col-1];
 
-        cout << "\tweight: " << edgeWeight[row-1][col-1]  << endl;                                                                              //Debug
+        //cout << "\tweight: " << edgeWeight[row-1][col-1]  << endl;                                                                              //Debug
         
         row--;
         col--;
