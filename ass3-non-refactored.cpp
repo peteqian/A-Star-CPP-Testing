@@ -145,6 +145,7 @@ int main(){
 
 
         if(status == 0 && vertices[goalVertex].length < bestLength){
+            bestLength = vertices[goalVertex].length;
             nPath2Vertices = 0;
             for(int i = goalVertex; i != startVertex; i = vertices[i].previous){
                 path2[nPath2Vertices++] = i;
