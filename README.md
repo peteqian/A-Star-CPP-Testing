@@ -12,6 +12,8 @@ In order to execute test cases, you must install the following pre-requisites:
 If you encounter errors with CMake. Ensure your settings are correct, check main page of CMake via VSCode. 
 Or, alternatively download from https://cmake.org/ and install into directory you can locate.
 
+Install MinGW Version 8.1.0 [here](https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win32/Personal%20Builds/mingw-builds/installer/mingw-w64-install.exe/download)
+
 Add to user environment variables PATH the ```~/path/to/your/compiler/bin``` folder and ```~/path/to/your/cmake/bin``` folder. Ensure both are added.
 
 Check your CMake and compiler has been installed.
