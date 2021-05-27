@@ -38,11 +38,12 @@ class InappropriateDataTypes : public::testing::Test {
         void writeCharVertices();
         void writeCharEdges();
         void writeCharStartGoal();
-        void writeFloatVertices();
-        void writeFloatEdges();
+        void writeFloatVertexLabel();
+        void writeFloatEdgeVertexLabels();
         void writeNegativeNumberOf(const char* fileName);
         void writeNegativeVertices();
         void writeNegativeEdges();
+        void writeNegativeEdgeWeight();
         void writeNegativeStartGoal();
 };
 
@@ -52,7 +53,7 @@ void InappropriateDataTypes::writeCorrectNumberOf(const char* fileName){
 
     // Set nVertices and nEdges
     srand(time(NULL));
-    no_of_vertices = rand() % 5 + 1;
+    no_of_vertices = rand() % 10 + 3;
     no_of_edges = no_of_vertices-1;
 
     // Writes: number_of_vertices \t
@@ -64,7 +65,7 @@ void InappropriateDataTypes::writeCorrectVertices(){
     // Write node, posX, posY
     for(int i = 1; i <= no_of_vertices; i++){
         // Node \t posX \t posY
-        int posX = rand() % 5 + 1, posY = rand() % 5 + 1;
+        int posX = rand() % 10 + 3, posY = rand() % 10 + 3;
         outData << i << "\t" << posX << "\t" << posY << endl;
     }
 }
@@ -139,22 +140,22 @@ void InappropriateDataTypes::writeCharStartGoal(){
     outData.close();
 }
 
-void InappropriateDataTypes::writeFloatVertices(){
-    srand(time(NULL));
+void InappropriateDataTypes::writeFloatVertexLabel(){
+    srand(static_cast <unsigned> (time(NULL)));
     // Write node, posX, posY
     for(int i = 1; i <= no_of_vertices; i++){
         // Node \t posX \t posY
-        float x = ((float)rand()/5), y = rand() % 5 + x;
-        outData << i << "\t" << x << "\t" << y << endl;
+        float x = 1 + static_cast <float> (rand()) / (static_cast <float>(RAND_MAX/(5-1)));
+        outData << x << "\t" << i << "\t" << i+1 << endl;
     }
 }
 
-void InappropriateDataTypes::writeFloatEdges(){
+void InappropriateDataTypes::writeFloatEdgeVertexLabels(){
     srand(time(NULL));
 
     for(int i = 1; i < no_of_edges; i++){
-        float a = (float(rand()) / float(5) + 1);
-        outData << i << "\t" << a << "\t" << i+a << endl; 
+        float a = 1 + static_cast <float> (rand()) / (static_cast <float>(RAND_MAX/(5-1)));
+        outData << i+a+a << "\t" << a << "\t" << i+a << endl; 
     }
     outData << no_of_edges << "\t" << no_of_edges << "\t" << 1 << endl; 
 }
@@ -165,7 +166,7 @@ void InappropriateDataTypes::writeNegativeNumberOf(const char* fileName){
 
     // Set nVertices and nEdges
     srand(time(NULL));
-    no_of_vertices = rand() % 5 + 1;
+    no_of_vertices = rand() % 10 + 3;
     no_of_edges = no_of_vertices-1;
 
     // Writes: number_of_vertices \t
@@ -177,7 +178,7 @@ void InappropriateDataTypes::writeNegativeVertices(){
     // Write node, posX, posY
     for(int i = 1; i <= no_of_vertices; i++){
         // Node \t posX \t posY
-        int posX = rand() % 5 + 1, posY = rand() % 5 + 1;
+        int posX = rand() % 10 + 3, posY = rand() % 10 + 3;
         outData << i << "\t" << -posX << "\t" << -posY << endl;
     }
 }
@@ -187,6 +188,13 @@ void InappropriateDataTypes::writeNegativeEdges(){
         outData << -i << "\t" << -i+1 << "\t" << -1 << endl;
     }
     outData << -no_of_edges << "\t" << -no_of_edges << "\t" << -1 << endl; 
+}
+
+void InappropriateDataTypes::writeNegativeEdgeWeight(){
+    for(int i = 1; i < no_of_edges; i++){
+        outData << i << "\t" << i+1 << "\t" << -1 << endl;
+    }
+    outData << no_of_edges << "\t" << no_of_edges << "\t" << -1 << endl; 
 }
 
 void InappropriateDataTypes::writeNegativeStartGoal(){
@@ -246,25 +254,25 @@ TEST_F(InappropriateDataTypes, InputCharValues_StartGoal){
     ASSERT_EQ(1, simulation->readFile());
 }
 
-// TEST_F(VerifyData, InputFloatValues_Edges){
-//     const char* file = "VerifyData_FloatValues_Edges.txt";
-//     writeCorrectNumberOf(file);
-//     writeCorrectVertices();
-//     writeFloatEdges();
-//     writeCorrectStartGoal();
-//     simulation->openFile(file);
-//     ASSERT_EQ(1, simulation->readFile());
-// }
+TEST_F(InappropriateDataTypes, InputFloatValues_EdgeVertexLabels){
+    const char* file = "VerifyData_FloatValues_EdgeVertexLabels.txt";
+    writeCorrectNumberOf(file);
+    writeCorrectVertices();
+    writeFloatEdgeVertexLabels();
+    writeCorrectStartGoal();
+    simulation->openFile(file);
+    ASSERT_EQ(1, simulation->readFile());
+}
 
-// TEST_F(VerifyData, InputFloatValues_Vertices){
-//     const char* file = "VerifyData_FloatValues_Vertices.txt";
-//     writeCorrectNumberOf(file);
-//     writeFloatVertices();
-//     writeCorrectEdges();
-//     writeCorrectStartGoal();
-//     simulation->openFile(file);
-//     ASSERT_EQ(1, simulation->readFile());
-// }
+TEST_F(InappropriateDataTypes, InputFloatValues_VertexLabel){
+    const char* file = "VerifyData_FloatValues_VertexLabel.txt";
+    writeCorrectNumberOf(file);
+    writeFloatVertexLabel();
+    writeCorrectEdges();
+    writeCorrectStartGoal();
+    simulation->openFile(file);
+    ASSERT_EQ(1, simulation->readFile());
+}
 
 TEST_F(InappropriateDataTypes, InputNegativeIntValues_NumberOf){
     const char* file = "VerifyData_NegativeIntValues_NumberOf.txt";
@@ -281,6 +289,16 @@ TEST_F(InappropriateDataTypes, InputNegativeIntValues_Edges){
     writeCorrectNumberOf(file);
     writeCorrectVertices();
     writeNegativeEdges();
+    writeCorrectStartGoal();
+    simulation->openFile(file);
+    ASSERT_EQ(1, simulation->readFile());
+}
+
+TEST_F(InappropriateDataTypes, InputNegativeIntValues_EdgeWeight){
+    const char* file = "VerifyData_NegativeIntValues_EdgeWeight.txt";
+    writeCorrectNumberOf(file);
+    writeCorrectVertices();
+    writeNegativeEdgeWeight();
     writeCorrectStartGoal();
     simulation->openFile(file);
     ASSERT_EQ(1, simulation->readFile());
