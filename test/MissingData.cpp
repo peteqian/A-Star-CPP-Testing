@@ -31,7 +31,7 @@ class MissingData : public::testing::Test {
         void writeMissingEdges();
         void writeMissingGoalVertex();
         void writeCompletePath();
-
+        void oneNode();
 };
 
 // Function writes the vertices into a data file only.

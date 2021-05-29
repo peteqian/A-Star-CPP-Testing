@@ -5,8 +5,14 @@ using namespace std;
 
 int main(){
   Simulation sim;
-  sim.openFile("BadData.txt");
-  sim.readFile();
-  sim.run();
+
+  if(!sim.openFile("DeceivingPath.txt")){
+    sim.readFile();
+    sim.run();
+  } else {
+    return 1;
+  }
+
+  
   return 0;
 }

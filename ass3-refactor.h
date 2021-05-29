@@ -48,7 +48,7 @@ class Simulation{
         void makeheap(int *heap, int heapSize);
         void siftUp(int *heap, int i);
         void siftDown (int *heap, int heapSize, int i);
-
+        void calculateHeuristic(int vertexOne, int);
         
 };
 

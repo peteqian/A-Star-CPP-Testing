@@ -146,6 +146,10 @@ int Simulation::readFile(){
         return 1;
     }
     
+    for(int i = 0; i < nVertices; i++){
+        calculateHeuristic(i, goalVertex);
+    }
+
     return 0;
 }
 
@@ -288,6 +292,12 @@ int Simulation::astar(){
     }
 
     return 1;
+}
+
+void Simulation::calculateHeuristic(int vertexOne, int vertexTwo){
+    double distance = 0.0;
+    distance =  sqrt( pow(vertices[vertexTwo].xCoordinate-vertices[vertexOne].xCoordinate,2)+ pow(vertices[vertexTwo].yCoordinate-vertices[vertexOne].yCoordinate,2));
+    vertices[vertexOne].heuristic = distance;
 }
 
 void Simulation::makeheap(int *heap, int heapSize){
