@@ -1,62 +1,58 @@
-#include "ass3-refactor.h"
+#include "TestOracle.h"
 
-int Simulation::openFile(const char* fileName){
-    
-    cerr << "Entering the file name: " << fileName << endl;
-
-    fin.open(fileName);
-
-    if(!fin){
-        cerr << "Error opening file " << fileName << ". Program will exit" << endl;
+int TestOracle::openFile(const char* fileName){
+    fileIn.open(fileName);
+    if(!fileIn){
+        cerr << "TestOracle - Error opening file " << fileName << "." << endl;
         return 1;
     }
+    cout << "TestOracle - Successfully opened: " << fileName << endl;
     return 0;
 }
 
-int Simulation::readFile(){
-
-    //cout << "Reading File" << endl;                                                                                           //Debug
+int TestOracle::readFile(){
     // Read into number of vertices and edges from top line of sample data
-    fin >> nVertices >> nEdges;
-    
-    //cout << "nVertices: " << nVertices << "\tnEdges: " << nEdges << endl;                                                     //Debug
+    fileIn >> nVertices >> nEdges;
     
     // Output an error if the symbol cannot be read into an int variable
-    if(!fin.good()){
-        cerr << "You must enter an int value for the number of vertices and number of edges." << endl;
+    if(!fileIn.good()){
+        cerr << "You must enter an int value for the number of vertices and/or number of edges." << endl;
+        return 1;
+    }
+
+    // With this condition, the program cannot accept negative number of vertices and number of edges
+    if(nVertices < 0 || nEdges < 0){
+        cerr << "Cannot input negative number of vertices and/or number of edges." << endl;
         return 1;
     }
 
     // Initialize the data
-    vertices = new vertex[nVertices];
+    vertices = new vertexStruct[nVertices];
     for(int i = 0; i < nVertices; i++){
-        fin >> id >> vertices[i].xCoordinate >> vertices[i].yCoordinate;
+        fileIn >> id >> vertices[i].xCoordinate >> vertices[i].yCoordinate;
         
         // Output an error if the symbol cannot be read into an int variable
-        if(!fin.good()){
-            cerr << "You must enter an int value for the vertex and the coordinates." << endl;
+        if(!fileIn.good()){
+            cerr << "You must enter an int value for the vertexStruct and/or the coordinates." << endl;
             return 1;
         }
 
-        //cout << "id: " << id << "\tvertices[i].xCoordinate: " << vertices[i].xCoordinate << "\tvertices[i].yCoordinate: " << vertices[i].yCoordinate << endl;
-
-        // Compare id_track (previous id) with newly read id
+        // Vertices Order Check
         if (id_tracker < id){
             id_tracker = id;
         } else {
-            cerr << "Previous Id is higher than current id. This may mean the order of read in data is wrong." << endl;
-            return 0;
+            cerr << "TestOracle - Previous read in number '" << id_tracker;
+            cerr << "' is higher than current read in number '" << id;
+            cerr << "'. This may mean the order of read in data is wrong." << endl;
+            return 1;
         }
 
         // With this condition, the program cannot accept negative coordinates
         if(vertices[i].xCoordinate < 0 || vertices[i].yCoordinate < 0){
-            cerr << "Cannot input negative coordinates." << endl;
-            return 0;
+            cerr << "TestOracle - Cannot input negative coordinates." << endl;
+            return 1;
         }
     }
-
-    //cout << "Finished reading vertices and their x-y coordinates." << endl;                                                   //Debug
-    
 
     edgeWeight = new double*[nVertices];
 
@@ -75,25 +71,34 @@ int Simulation::readFile(){
     // Account for duplicate paths. Since graph is non-directed, store both [i][j] and [j][i] weights.
     for (int i = 0; i < nEdges;i++){
        
-        fin >> row >> col;
-        
-        //cout << "row: " << row << "\tcol: " << col;                                                             //Debug                                             
+        fileIn >> row >> col;
 
-        if(row > nVertices || col > nVertices){
-            cerr << "You cannot insert an edge with vertex that doesn't exist." << endl;
+        // Output an error if the symbol cannot be read into an int variable
+        if(!fileIn.good()){
+            cerr << "TestOracle - You must insert int values only for the edge and/or the weight." << endl;
             return 1;
         }
 
-        if(!fin.good()){
-            cerr << "You must insert int values only for the edge and the weight." << endl;
+        // With this condition, the program cannot accept negative edge values
+        if(row < 0 || col < 0){
+            cerr << "TestOracle - Cannot input negative edge values." << endl;
+            return 1;
+        }
+
+        if(row > nVertices || col > nVertices){
+            cerr << "TestOracle - You cannot insert an edge with a vertexStruct that doesn't exist." << endl;
             return 1;
         }
 
         // Feed in edge weight afterwards
-        fin >> edgeWeight[row-1][col-1];
+        fileIn >> edgeWeight[row-1][col-1];
 
-        //cout << "\tweight: " << edgeWeight[row-1][col-1]  << endl;                                                                              //Debug
-        
+        // With this condition, the program cannot accept negative edge weight
+        if(edgeWeight[row-1][col-1] < 0){
+            cerr << "Cannot input negative edge weight." << endl;
+            return 1;
+        }
+
         row--;
         col--;
 
@@ -101,21 +106,31 @@ int Simulation::readFile(){
         if (edgeWeight[row][col] < edgeWeight[col][row]){
             edgeWeight[col][row] = edgeWeight[row][col];
         } else {
-            edgeWeight[row][col] = edgeWeight[col][row];
+            edgeWeight[row][col] = edgeWeight[row][col];
         }
 
     }
-    
-    //cout << "Finished fixing edges to create non-directed graph." << endl;                                                    //Debug
 
-    // Read start and goal vertex and calculate heuristics for each vertex.
-    
-    fin >> startVertex >> goalVertex;
+
+    // Read start and goal vertexStruct and calculate heuristics for each vertexStruct.
+    fileIn >> startVertex >> goalVertex;                                
+
+    // With this condition, the program cannot accept negative start vertexStruct and goal vertexStruct
+    if(startVertex < 0 || goalVertex < 0){
+        cerr << "Cannot input negative edge start vertexStruct and/or goal vertexStruct." << endl;
+        return 1;
+    }
+
+    // Output an error if the symbol cannot be read into an int variable
+    if(!fileIn.good()){
+        cerr << "You must insert int values only for the edge start vertexStruct and/or goal vertexStruct." << endl;
+        return 1;
+    }
+
     startVertex--;
     goalVertex--;
-    //cout << "Starting Vertex: " << startVertex << "\t Goal Vertex: " << goalVertex << endl;                                   // Debug
 
-    if(fin.eof()){ 
+    if(fileIn.eof()){ 
         cout << "Haven't reached the end of the file." << endl;
         return 1;
     }
@@ -123,18 +138,15 @@ int Simulation::readFile(){
     return 0;
 }
 
-int Simulation::run(){
+int TestOracle::run(){
     
     // Run type
     int status = 0;
-
-
-    
     status = astar();
 
     // Report shortest Path information
-
     if (status == 0){
+        cout << "---TestOracle---" << endl;
         cout << "The shortest path has a length of " << vertices[goalVertex].length << endl;
         path = new int[nVertices];
         nPathVertices = 0;
@@ -176,7 +188,6 @@ int Simulation::run(){
 
 
         if(status == 0 && vertices[goalVertex].length < bestLength){
-            bestLength = vertices[goalVertex].length;
             nPath2Vertices = 0;
             for(int i = goalVertex; i != startVertex; i = vertices[i].previous){
                 path2[nPath2Vertices++] = i;
@@ -185,13 +196,13 @@ int Simulation::run(){
         }
     }
 
+
     if(vertices[goalVertex].length == HUGE_VAL){
         nPath2Vertices = 0;
     }
-
+    
     if(nPath2Vertices > 0){
         cout << "The 2nd shortest path has a length of " << vertices[goalVertex].length << endl;
-
         cout << " The vertices on this path are: ";
         for(int i = nPath2Vertices; i > 0; i--){
             cout << path2[i-1]+1 << " ";
@@ -200,7 +211,7 @@ int Simulation::run(){
     }
 
 
-    fin.close();
+    fileIn.close();
     delete[] vertices;
     for(int i = 0; i < nVertices; i ++){
         delete[] edgeWeight[i];
@@ -212,7 +223,7 @@ int Simulation::run(){
     return 0;
 }
 
-int Simulation::astar(){
+int TestOracle::astar(){
     double current, update;
 
     // Candidate Variables
@@ -264,13 +275,13 @@ int Simulation::astar(){
     return 1;
 }
 
-void Simulation::makeheap(int *heap, int heapSize){
+void TestOracle::makeheap(int *heap, int heapSize){
     for (int i = heapSize/2; i >= 0; i--){
         siftDown(heap, heapSize, i);
     }
 }
 
-void Simulation::siftUp(int *heap, int i){
+void TestOracle::siftUp(int *heap, int i){
 
     int temp;
 
@@ -293,7 +304,7 @@ void Simulation::siftUp(int *heap, int i){
     return ;
 }
 
-void Simulation::siftDown (int *heap, int heapSize, int i){
+void TestOracle::siftDown (int *heap, int heapSize, int i){
     int temp, c;
     double iVal, cVal, c1Val ;
     c = 2 * i + 1;

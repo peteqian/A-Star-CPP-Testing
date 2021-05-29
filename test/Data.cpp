@@ -1,6 +1,8 @@
 #include "../ass3-refactor.h"
+#include "TestOracle.h"
 #include <gtest/gtest.h>
 #include <time.h>
+
 
 class Data : public::testing::Test {
 
@@ -9,21 +11,18 @@ class Data : public::testing::Test {
     protected:
         ofstream MyFile;
         Simulation* simulation;
-        //Simulation simulation;
-        virtual void SetUp() override {
-            simulation = new Simulation();
-        }
-
-        virtual void TearDown() override {
-            delete simulation;
-        }
+        TestOracle* testOracle;
 
         Data(){ 
+            simulation = new Simulation();
+            testOracle = new TestOracle();
             std::cout << "Data Class is constructed" << std::endl; 
         }
         ~Data(){ 
-            std::cout << "Destructing Data Class" << std::endl; 
             MyFile.close();
+            delete testOracle;
+            delete simulation;
+            std::cout << "Destructing Data Class" << std::endl; 
         }
     public:
         void writeVertices(const char* fileName);
@@ -40,7 +39,12 @@ void Data::writeVertices(const char* fileName){
     cout << "Opened File: " << fileName << endl;
     srand(time(NULL));
 
+<<<<<<< Updated upstream
     no_of_vertices = rand() % 10 + 2;
+=======
+    // Generate a random number between 3 to 10 for vertices and generated number-1 for edges.
+    no_of_vertices = rand() % 10 + 3;
+>>>>>>> Stashed changes
     no_of_edges = no_of_vertices-1;
     
     // Writes: number_of_vertices \t
@@ -48,7 +52,7 @@ void Data::writeVertices(const char* fileName){
 
     // Write node, posX, posY
     for(int i = 1; i <= no_of_vertices; i++){
-        // Node \t posX \t posY
+        // Generate random x and y coordinates for the vertex
         int posX = rand() % 5 + 1, posY = rand() % 5 + 1;
         MyFile << i << "\t" << posX << "\t" << posY << endl;
     }
@@ -66,9 +70,11 @@ void Data::writeCompletePath(){
 
 // Function does not write the correct amount of edges as specified on Line:1 in the file.
 void Data::writeInCompletePath(){
+    
     for(int i = 1; i < no_of_edges; i++){
         MyFile << i << "\t" << i+1 << "\t" << 1 << endl; 
     }
+    MyFile << " " << "\t" << " " << "\t" << " " << endl; 
     MyFile << 1 << "\t" << no_of_edges << endl;
     MyFile.close();
 }
@@ -117,8 +123,8 @@ TEST_F(Data, InCompletedPath){
     writeVertices(file);
     writeInCompletePath();
     simulation->openFile(file);
-    //ASSERT_DEATH(simulation->readFile(), "");
-    ASSERT_EQ(1,simulation->readFile());
+    testOracle->openFile(file);
+    ASSERT_EQ( testOracle->readFile(), simulation->readFile());
 }
 
 TEST_F(Data, CompletedPath){
@@ -128,15 +134,7 @@ TEST_F(Data, CompletedPath){
     writeCompletePath();
     simulation->openFile(file);
     simulation->readFile();
-    ASSERT_EQ(0,simulation->run());
-}
-
-TEST_F(Data, BadData){
-    
-    const char* file = "BadData.txt";
-    writeVertices(file);
-    writeBadData();
-    simulation->openFile(file);
-    simulation->readFile();
-   
+    testOracle->openFile(file);
+    testOracle->readFile();
+    ASSERT_EQ(testOracle->run(),simulation->run());
 }
