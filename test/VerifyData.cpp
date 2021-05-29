@@ -200,7 +200,6 @@ void InappropriateDataTypes::writeNegativeStartGoal(){
 }
 
 
-
 TEST_F(InappropriateDataTypes, InputCorrectValues){
     const char* file = "VerifyData_CorrectValues.txt";
     writeCorrectNumberOf(file);

@@ -39,12 +39,8 @@ void Data::writeVertices(const char* fileName){
     cout << "Opened File: " << fileName << endl;
     srand(time(NULL));
 
-<<<<<<< Updated upstream
-    no_of_vertices = rand() % 10 + 2;
-=======
     // Generate a random number between 3 to 10 for vertices and generated number-1 for edges.
     no_of_vertices = rand() % 10 + 3;
->>>>>>> Stashed changes
     no_of_edges = no_of_vertices-1;
     
     // Writes: number_of_vertices \t

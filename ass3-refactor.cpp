@@ -23,7 +23,13 @@ int Simulation::readFile(){
     
     // Output an error if the symbol cannot be read into an int variable
     if(!fin.good()){
-        cerr << "You must enter an int value for the number of vertices and number of edges." << endl;
+        cerr << "You must enter an int value for the number of vertices and/or number of edges." << endl;
+        return 1;
+    }
+
+    // With this condition, the program cannot accept negative number of vertices and number of edges
+    if(nVertices < 0 || nEdges < 0){
+        cerr << "Cannot input negative number of vertices and/or number of edges." << endl;
         return 1;
     }
 
@@ -40,30 +46,28 @@ int Simulation::readFile(){
 
         //cout << "id: " << id << "\tvertices[i].xCoordinate: " << vertices[i].xCoordinate << "\tvertices[i].yCoordinate: " << vertices[i].yCoordinate << endl;
 
-        // Compare id_track (previous id) with newly read id
+        // Vertices Order Check
         if (id_tracker < id){
             id_tracker = id;
         } else {
-            cerr << "Previous Id is higher than current id. This may mean the order of read in data is wrong." << endl;
-            return 0;
+            cerr << "TestOracle - Previous read in number '" << id_tracker;
+            cerr << "' is higher than current read in number '" << id;
+            cerr << "'. This may mean the order of read in data is wrong." << endl;
+            return 1;
         }
 
         // With this condition, the program cannot accept negative coordinates
         if(vertices[i].xCoordinate < 0 || vertices[i].yCoordinate < 0){
             cerr << "Cannot input negative coordinates." << endl;
-            return 0;
+            return 1;
         }
     }
 
     //cout << "Finished reading vertices and their x-y coordinates." << endl;                                                   //Debug
-    
-
     edgeWeight = new double*[nVertices];
-
     for (int i = 0; i < nVertices; i++){
         edgeWeight[i] = new double[nVertices];
     }
-
     for (int row = 0; row < nVertices; row++){
         for (int col = 0; col < nVertices; col++){
             edgeWeight[row][col] = HUGE_VAL;
@@ -78,21 +82,30 @@ int Simulation::readFile(){
         fin >> row >> col;
         
         //cout << "row: " << row << "\tcol: " << col;                                                             //Debug                                             
-
-        if(row > nVertices || col > nVertices){
-            cerr << "You cannot insert an edge with vertex that doesn't exist." << endl;
+        if(!fin.good()){
+            cerr << "You must insert int values only for the edge and the weight." << endl;
             return 1;
         }
 
-        if(!fin.good()){
-            cerr << "You must insert int values only for the edge and the weight." << endl;
+        // With this condition, the program cannot accept negative edge values
+        if(row < 0 || col < 0){
+            cerr << "Cannot input negative edge values." << endl;
+            return 1;
+        }
+
+        if(row > nVertices || col > nVertices){
+            cerr << "You cannot insert an edge with a vertexStruct that doesn't exist." << endl;
             return 1;
         }
 
         // Feed in edge weight afterwards
         fin >> edgeWeight[row-1][col-1];
 
-        //cout << "\tweight: " << edgeWeight[row-1][col-1]  << endl;                                                                              //Debug
+        // With this condition, the program cannot accept negative edge weight
+        if(edgeWeight[row-1][col-1] < 0){
+            cerr << "Cannot input negative edge weight." << endl;
+            return 1;
+        }                                                                            //Debug
         
         row--;
         col--;
@@ -111,9 +124,22 @@ int Simulation::readFile(){
     // Read start and goal vertex and calculate heuristics for each vertex.
     
     fin >> startVertex >> goalVertex;
+    //cout << "Starting Vertex: " << startVertex << "\t Goal Vertex: " << goalVertex << endl;                                   // Debug
+    
+    // With this condition, the program cannot accept negative start vertexStruct and goal vertexStruct
+    if(startVertex < 0 || goalVertex < 0){
+        cerr << "Cannot input negative edge start vertexStruct and/or goal vertexStruct." << endl;
+        return 1;
+    }
+
+    // Output an error if the symbol cannot be read into an int variable
+    if(!fin.good()){
+        cerr << "You must insert int values only for the edge start vertexStruct and/or goal vertexStruct." << endl;
+        return 1;
+    }
+
     startVertex--;
     goalVertex--;
-    //cout << "Starting Vertex: " << startVertex << "\t Goal Vertex: " << goalVertex << endl;                                   // Debug
 
     if(fin.eof()){ 
         cout << "Haven't reached the end of the file." << endl;

@@ -121,7 +121,11 @@ TEST_F(MissingData, Missing_No_Vertices_Edges){
     writeMissingVerticeEdges(fileName);
     writeCompletePath();
     simulation->openFile(fileName);                // Using simulation booject to open the file
-    ASSERT_EQ(1,simulation->readFile());
+    //ASSERT_EQ(1,simulation->readFile());
+
+    // Compare with Test Oracle
+    testOracle->openFile(fileName);
+    ASSERT_EQ( testOracle->readFile(), simulation->readFile());
 }
 
 TEST_F(MissingData, missingVerticesFromInputData){
@@ -129,7 +133,11 @@ TEST_F(MissingData, missingVerticesFromInputData){
     writeMissingVertices(fileName);
     writeCompletePath();
     simulation->openFile(fileName);                // Using simulation booject to open the file
-    ASSERT_EQ(1,simulation->readFile());
+    //ASSERT_EQ(1,simulation->readFile());
+
+    // Compare with Test Oracle
+    testOracle->openFile(fileName);
+    ASSERT_EQ( testOracle->readFile(), simulation->readFile());
 }
 
 
@@ -138,7 +146,11 @@ TEST_F(MissingData, missingEdgesFromInputData){
     writeVertices(fileName);
     writeMissingEdges();
     simulation->openFile(fileName);                // Using simulation booject to open the file
-    ASSERT_EQ(1,simulation->readFile());
+    //ASSERT_EQ(1,simulation->readFile());
+
+    // Compare with Test Oracle
+    testOracle->openFile(fileName);
+    ASSERT_EQ( testOracle->readFile(), simulation->readFile());
 }
 
 TEST_F(MissingData, writeMissingStartGoalPosition){
@@ -146,5 +158,9 @@ TEST_F(MissingData, writeMissingStartGoalPosition){
     writeVertices(fileName);
     writeMissingGoalVertex();
     simulation->openFile(fileName);                // Using simulation booject to open the file
-    ASSERT_EQ(1,simulation->readFile());
+    //ASSERT_EQ(1,simulation->readFile());
+
+    // Compare with Test Oracle
+    testOracle->openFile(fileName);
+    ASSERT_EQ( testOracle->readFile(), simulation->readFile());
 }

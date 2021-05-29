@@ -2,13 +2,9 @@ cmake_minimum_required(VERSION 3.8)
 
 set(This SimTests)
 
-<<<<<<< Updated upstream
-set(Sources SimTests.cpp Data.cpp Graph.cpp)
-=======
 set(Headers TestOracle.h)
 
-set(Sources SimTests.cpp Data.cpp Graph.cpp VerifyData.cpp MissingData.cpp TestOracle.cpp)
->>>>>>> Stashed changes
+set(Sources Data.cpp Graph.cpp VerifyData.cpp MissingData.cpp TestOracle.cpp SimTests.cpp)
 
 add_executable(${This} ${Sources})
 target_link_libraries(${This} PUBLIC

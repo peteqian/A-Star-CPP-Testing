@@ -6,6 +6,8 @@
 class SimulationFile : public::testing::Test {
 
     protected:
+        ifstream src;
+        ofstream dest;
         ofstream MyFile;
         Simulation* simulation;
         TestOracle* testOracle;
@@ -13,9 +15,13 @@ class SimulationFile : public::testing::Test {
         SimulationFile(){ 
             simulation = new Simulation();
             testOracle = new TestOracle();
-            std::cout << "SimulationFile is constructed" << std::endl; 
 
-            //MyFile.open(myFileName);
+            // Copy the static Input Test Data into location of the test folder
+            std::ifstream src("../../Ass3.txt", std::ios::binary);
+            std::ofstream dest("Ass3.txt", std::ios::binary);
+            dest << src.rdbuf();
+            
+            std::cout << "SimulationFile is constructed" << std::endl; 
         }
         ~SimulationFile(){ 
             MyFile.close();
