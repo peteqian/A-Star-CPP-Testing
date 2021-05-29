@@ -4,7 +4,7 @@ set(This SimTests)
 
 set(Headers TestOracle.h)
 
-set(Sources Data.cpp VerifyData.cpp MissingData.cpp TestOracle.cpp SimTests.cpp)
+set(Sources HeapTest.cpp VerifyData.cpp MissingData.cpp TestOracle.cpp SimTests.cpp)
 
 add_executable(${This} ${Sources})
 target_link_libraries(${This} PUBLIC

@@ -45,9 +45,9 @@ class Simulation{
         int readFile();
         int run();
         int astar();
-        void makeheap(int *heap, int heapSize);
-        void siftUp(int *heap, int i);
-        void siftDown (int *heap, int heapSize, int i);
+        void makeheap(int *heap, int heapSize, vertex *verticesIn);
+        void siftUp(int *heap, int i, vertex *verticesIn);
+        void siftDown (int *heap, int heapSize, int i, vertex *verticesIn);
         void calculateHeuristic(int vertexOne, int);
         
 };

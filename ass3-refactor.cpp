@@ -50,7 +50,7 @@ int Simulation::readFile(){
         if (id_tracker < id){
             id_tracker = id;
         } else {
-            cerr << "TestOracle - Previous read in number '" << id_tracker;
+            cerr << "Previous read in number '" << id_tracker;
             cerr << "' is higher than current read in number '" << id;
             cerr << "'. This may mean the order of read in data is wrong." << endl;
             return 1;
@@ -263,7 +263,7 @@ int Simulation::astar(){
         vertices[i].previous = startVertex;
     }
 
-    makeheap(candidate, nCandidates);
+    makeheap(candidate, nCandidates, vertices);
 
     while(candidate[0] != goalVertex && vertices[candidate[0]].length != HUGE_VAL){
         // Remove the best candidate
@@ -271,7 +271,7 @@ int Simulation::astar(){
 
         nCandidates--;
         candidate[0] = candidate[nCandidates];
-        siftDown(candidate, nCandidates,0);
+        siftDown(candidate, nCandidates,0, vertices);
 
         for(int i = 0; i < nCandidates; i++){
             current = vertices[candidate[i]].length;
@@ -279,9 +279,9 @@ int Simulation::astar(){
 
             if(update < current){
                 // Update candidates values and restore the heap
-                vertices [candidate [i]].length = update;
-                vertices [candidate [i]].previous = selected;
-                siftUp (candidate, i);
+                vertices[candidate [i]].length = update;
+                vertices[candidate [i]].previous = selected;
+                siftUp (candidate, i, vertices);
             }
         }
     }
@@ -300,13 +300,13 @@ void Simulation::calculateHeuristic(int vertexOne, int vertexTwo){
     vertices[vertexOne].heuristic = distance;
 }
 
-void Simulation::makeheap(int *heap, int heapSize){
-    for (int i = heapSize/2; i >= 0; i--){
-        siftDown(heap, heapSize, i);
+void Simulation::makeheap(int *heap, int heapSize, vertex *verticesIn){
+    for (int i = heapSize/2 - 1; i >= 0; i--){
+        siftDown(heap, heapSize, i, verticesIn);
     }
 }
 
-void Simulation::siftUp(int *heap, int i){
+void Simulation::siftUp(int *heap, int i, vertex *verticesIn){
 
     int temp;
 
@@ -315,8 +315,8 @@ void Simulation::siftUp(int *heap, int i){
     }
 
     int p = (i-1)/2;
-    double iVal = vertices[heap[i]].length + vertices[heap[i]].heuristic;
-    double pVal = vertices[heap[p]].length + vertices[heap[p]].heuristic;
+    double iVal = verticesIn[heap[i]].length + verticesIn[heap[i]].heuristic;
+    double pVal = verticesIn[heap[p]].length + verticesIn[heap[p]].heuristic;
 
     if(pVal < iVal) {
         return;
@@ -325,11 +325,11 @@ void Simulation::siftUp(int *heap, int i){
     temp = heap[p];
     heap[p] = heap[i];
     heap[i] = temp;
-    siftUp (heap, p);
+    siftUp (heap, p, verticesIn);
     return ;
 }
 
-void Simulation::siftDown (int *heap, int heapSize, int i){
+void Simulation::siftDown(int *heap, int heapSize, int i, vertex *verticesIn){
     int temp, c;
     double iVal, cVal, c1Val ;
     c = 2 * i + 1;
@@ -337,11 +337,11 @@ void Simulation::siftDown (int *heap, int heapSize, int i){
         return;
     }
 
-    iVal = vertices [heap[i]].length + vertices [heap[i]].heuristic ;
-    cVal = vertices [heap[c]].length + vertices [heap[c]].heuristic ;
+    iVal = verticesIn[heap[i]].length + verticesIn[heap[i]].heuristic ;
+    cVal = verticesIn[heap[c]].length + verticesIn[heap[c]].heuristic ;
 
     if (c + 1 < heapSize ) {
-        c1Val = vertices [heap[c + 1]].length + vertices [heap[c + 1]].heuristic;
+        c1Val = verticesIn [heap[c + 1]].length + verticesIn [heap[c + 1]].heuristic;
         if (c1Val < cVal ){
             c++;
             cVal = c1Val;
@@ -355,6 +355,6 @@ void Simulation::siftDown (int *heap, int heapSize, int i){
     temp = heap[c];
     heap[c] = heap[i];
     heap[i] = temp;
-    siftDown (heap, heapSize, c);
+    siftDown (heap, heapSize, c, verticesIn);
     return;
 }

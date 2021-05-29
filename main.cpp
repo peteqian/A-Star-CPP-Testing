@@ -6,7 +6,7 @@ using namespace std;
 int main(){
   Simulation sim;
 
-  if(!sim.openFile("DeceivingPath.txt")){
+  if(!sim.openFile("Ass3.txt")){
     sim.readFile();
     sim.run();
   } else {

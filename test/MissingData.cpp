@@ -26,12 +26,13 @@ class MissingData : public::testing::Test {
         }
     public:
         void writeVertices(const char* fileName);
+        void writeOneNode(const char* fileName);
         void writeMissingVerticeEdges(const char* fileName);
         void writeMissingVertices(const char* fileName);
         void writeMissingEdges();
         void writeMissingGoalVertex();
         void writeCompletePath();
-        void oneNode();
+        
 };
 
 // Function writes the vertices into a data file only.
@@ -53,6 +54,24 @@ void MissingData::writeVertices(const char* fileName){
         int posX = rand() % 5 + 1, posY = rand() % 5 + 1;
         MyFile << i << "\t" << posX << "\t" << posY << endl;
     }
+}
+
+// Function writes only one vertex.
+void MissingData::writeOneNode(const char* fileName){
+
+    MyFile.open(fileName);
+    cout << "Opened File: " << fileName << endl;
+    srand(time(NULL));
+
+    no_of_vertices = rand() % 10 + 3;
+    no_of_edges = no_of_vertices-1;
+    
+    // Writes: number_of_vertices \t
+    MyFile << no_of_vertices << "\t" << no_of_edges << endl;
+
+    int posX = rand() % 5 + 1, posY = rand() % 5 + 1;
+    MyFile << 1 << "\t" << posX << "\t" << posY << endl;
+    
 }
 
 // Function does writes blank for the number of vertices and edges needed for the program.
@@ -120,7 +139,19 @@ TEST_F(MissingData, Missing_No_Vertices_Edges){
     const char* fileName = "Missing_No_Vertices_Edges.txt";
     writeMissingVerticeEdges(fileName);
     writeCompletePath();
-    simulation->openFile(fileName);                // Using simulation booject to open the file
+    simulation->openFile(fileName);               
+    //ASSERT_EQ(1,simulation->readFile());
+
+    // Compare with Test Oracle
+    testOracle->openFile(fileName);
+    ASSERT_EQ( testOracle->readFile(), simulation->readFile());
+}
+
+TEST_F(MissingData, OneNode){
+    const char* fileName = "OneNode.txt";
+    writeOneNode(fileName);
+    writeCompletePath();
+    simulation->openFile(fileName);           
     //ASSERT_EQ(1,simulation->readFile());
 
     // Compare with Test Oracle
@@ -132,7 +163,7 @@ TEST_F(MissingData, missingVerticesFromInputData){
     const char* fileName = "Missing_Vertices.txt";
     writeMissingVertices(fileName);
     writeCompletePath();
-    simulation->openFile(fileName);                // Using simulation booject to open the file
+    simulation->openFile(fileName);            
     //ASSERT_EQ(1,simulation->readFile());
 
     // Compare with Test Oracle
@@ -145,7 +176,7 @@ TEST_F(MissingData, missingEdgesFromInputData){
     const char* fileName = "Missing_Edges.txt";
     writeVertices(fileName);
     writeMissingEdges();
-    simulation->openFile(fileName);                // Using simulation booject to open the file
+    simulation->openFile(fileName);             
     //ASSERT_EQ(1,simulation->readFile());
 
     // Compare with Test Oracle
@@ -157,7 +188,7 @@ TEST_F(MissingData, writeMissingStartGoalPosition){
     const char* fileName = "Missing_StartGoalPosition.txt";
     writeVertices(fileName);
     writeMissingGoalVertex();
-    simulation->openFile(fileName);                // Using simulation booject to open the file
+    simulation->openFile(fileName);       
     //ASSERT_EQ(1,simulation->readFile());
 
     // Compare with Test Oracle

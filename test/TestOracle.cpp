@@ -16,13 +16,13 @@ int TestOracle::readFile(){
     
     // Output an error if the symbol cannot be read into an int variable
     if(!fileIn.good()){
-        cerr << "You must enter an int value for the number of vertices and/or number of edges." << endl;
+        cerr << "TestOracle - You must enter an int value for the number of vertices and/or number of edges." << endl;
         return 1;
     }
 
     // With this condition, the program cannot accept negative number of vertices and number of edges
     if(nVertices < 0 || nEdges < 0){
-        cerr << "Cannot input negative number of vertices and/or number of edges." << endl;
+        cerr << "TestOracle - Cannot input negative number of vertices and/or number of edges." << endl;
         return 1;
     }
 
@@ -33,7 +33,7 @@ int TestOracle::readFile(){
         
         // Output an error if the symbol cannot be read into an int variable
         if(!fileIn.good()){
-            cerr << "You must enter an int value for the vertexStruct and/or the coordinates." << endl;
+            cerr << "TestOracle - You must enter an int value for the vertexStruct and/or the coordinates." << endl;
             return 1;
         }
 
@@ -95,7 +95,7 @@ int TestOracle::readFile(){
 
         // With this condition, the program cannot accept negative edge weight
         if(edgeWeight[row-1][col-1] < 0){
-            cerr << "Cannot input negative edge weight." << endl;
+            cerr << "TestOracle - Cannot input negative edge weight." << endl;
             return 1;
         }
 
@@ -117,13 +117,13 @@ int TestOracle::readFile(){
 
     // With this condition, the program cannot accept negative start vertexStruct and goal vertexStruct
     if(startVertex < 0 || goalVertex < 0){
-        cerr << "Cannot input negative edge start vertexStruct and/or goal vertexStruct." << endl;
+        cerr << "TestOracle - Cannot input negative edge start vertexStruct and/or goal vertexStruct." << endl;
         return 1;
     }
 
     // Output an error if the symbol cannot be read into an int variable
     if(!fileIn.good()){
-        cerr << "You must insert int values only for the edge start vertexStruct and/or goal vertexStruct." << endl;
+        cerr << "TestOracle - You must insert int values only for the edge start vertexStruct and/or goal vertexStruct." << endl;
         return 1;
     }
 
@@ -131,7 +131,7 @@ int TestOracle::readFile(){
     goalVertex--;
 
     if(fileIn.eof()){ 
-        cout << "Haven't reached the end of the file." << endl;
+        cout << "TestOracle - Haven't reached the end of the file." << endl;
         return 1;
     }
     
