@@ -27,6 +27,7 @@ class MissingData : public::testing::Test {
     public:
         void writeVertices(const char* fileName);
         void writeOneNode(const char* fileName);
+        void writeOneEdge();
         void writeMissingVerticeEdges(const char* fileName);
         void writeMissingVertices(const char* fileName);
         void writeMissingEdges();
@@ -135,6 +136,14 @@ void MissingData::writeCompletePath(){
     MyFile << 1 << "\t" << no_of_edges << endl;
 }
 
+// Function writes only one edge.
+void MissingData::writeOneEdge(){
+
+    MyFile << 1 << "\t" << 2 << "\t" << 1 << endl; 
+    MyFile << no_of_edges << "\t" << no_of_edges << "\t" << 1 << endl; 
+    MyFile << 1 << "\t" << no_of_edges << endl;
+    
+}
 TEST_F(MissingData, Missing_No_Vertices_Edges){
     const char* fileName = "Missing_No_Vertices_Edges.txt";
     writeMissingVerticeEdges(fileName);
@@ -194,4 +203,20 @@ TEST_F(MissingData, writeMissingStartGoalPosition){
     // Compare with Test Oracle
     testOracle->openFile(fileName);
     ASSERT_EQ( testOracle->readFile(), simulation->readFile());
+}
+
+TEST_F(MissingData, writeOneNode){
+    const char* fileName = "OneNode.txt";
+    writeOneNode(fileName);
+    writeCompletePath();
+    simulation->openFile(fileName);       
+    ASSERT_EQ(1,simulation->readFile());
+}
+
+TEST_F(MissingData, writeOneEdge){
+    const char* fileName = "OneEdge.txt";
+    writeVertices(fileName);
+    writeOneEdge();
+    simulation->openFile(fileName);       
+    ASSERT_EQ(1,simulation->readFile());
 }
