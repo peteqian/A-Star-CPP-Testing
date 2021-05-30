@@ -37,9 +37,9 @@ int Simulation::readFile(){
     for(int i = 0; i < nVertices; i++){
         fin >> id >> vertices[i].xCoordinate >> vertices[i].yCoordinate;
         
-        // Output an error if the symbol cannot be read into an int variable
-        if(!fin.good()){
-            cerr << "You must enter an int value for the vertex and/or the coordinates." << endl;
+        // Output an error if the symbol cannot be read into an int or double variable
+        if(fin.bad()){
+            cerr << "You must enter an int value for the vertex and/or double values for the coordinates." << endl;
             return 1;
         }
 
@@ -94,7 +94,7 @@ int Simulation::readFile(){
 
         // Output an error if the symbol cannot be read into an int variable
         if(!fin.good()){
-            cerr << "You must insert int values only for the edge and/or the weight." << endl;
+            cerr << "You must insert int values only for the edges." << endl;
             return 1;
         }
 
@@ -103,10 +103,15 @@ int Simulation::readFile(){
 
         cout << "\tweight: " << edgeWeight[row-1][col-1]  << endl;                         
         
-        
         // With this condition, the program cannot accept negative edge weight
         if(edgeWeight[row-1][col-1] < 0){
             cerr << "Cannot input negative edge weight." << endl;
+            return 1;
+        }
+
+        // Output an error if the symbol cannot be read into a double variable
+        if(!fin.good()){
+            cerr << "You must insert a double value only for the edge weight." << endl;
             return 1;
         }
 
