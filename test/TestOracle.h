@@ -1,28 +1,30 @@
-#ifndef ASS3REFACTOR_H
-#define ASS3REFACTOR_H
+#ifndef TESTORACLE_H
+#define TESTORACLE_H
 
 #include <iostream>
 #include <fstream>
 #include <cmath>
 #include <signal.h>
 #include <iomanip>
+
 using namespace std;
 
-struct vertex {
+struct vertexStruct {
     double xCoordinate, yCoordinate;
     double length;
     int previous;
     double heuristic;
 };
 
-class Simulation{
+class TestOracle{
+
     private:
-        ifstream fin;
-        vertex *vertices;
+        ifstream fileIn;
+        vertexStruct *vertices;
         double **edgeWeight;
         int *candidate;
         int nVertices;
-        int startVertex, goalVertex;
+        int startVertex = -1, goalVertex = -1;
         string fileName = "";
         int id, nEdges;
         int id_tracker = 0;
@@ -39,17 +41,17 @@ class Simulation{
         int nPath2Vertices;
         int *path2;
 
+
     public:
-        Simulation(){}
+        TestOracle() {cout << "Default TestOracle Constructed" << endl; }
+        ~TestOracle() {cout << "TestOracle Destroyed" << endl;}
         int openFile(const char* fileName);
         int readFile();
         int run();
         int astar();
-        void makeheap(int *heap, int heapSize, vertex *verticesIn);
-        void siftUp(int *heap, int i, vertex *verticesIn);
-        void siftDown (int *heap, int heapSize, int i, vertex *verticesIn);
-        void calculateHeuristic(int vertexOne, int);
-        
+        void makeheap(int *heap, int heapSize);
+        void siftUp(int *heap, int i);
+        void siftDown (int *heap, int heapSize, int i);
 };
 
 #endif

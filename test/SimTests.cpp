@@ -2,12 +2,30 @@
 #include <gtest/gtest.h>
 #include <fstream> 
 
-using namespace std;
-
 class SimulationFile : public::testing::Test {
 
     protected:
+        ifstream src;
+        ofstream dest;
         ofstream MyFile;
+        Simulation* simulation;
+
+        SimulationFile(){ 
+            simulation = new Simulation();
+
+            // Copy the static Input Test Data into location of the test folder
+            std::ifstream src("../../Ass3.txt", std::ios::binary);
+            std::ofstream dest("Ass3.txt", std::ios::binary);
+            dest << src.rdbuf();
+            
+            std::cout << "SimulationFile is constructed" << std::endl; 
+        }
+        ~SimulationFile(){ 
+            MyFile.close();
+            delete simulation;
+            std::cout << "Destructing SimulationFile" << std::endl; 
+            
+        }
 
         void createFile(const char* myFileName){
             MyFile.open(myFileName);
@@ -17,48 +35,34 @@ class SimulationFile : public::testing::Test {
             MyFile.close();
         }
 
-        virtual void SetUp() override {
-            //std::cout << "Starting up!" << std::endl;
-            simulation = new Simulation();
-        }
-
-        virtual void TearDown() override {
-            //std::cout << "Tearing Down!" << std::endl;
-            delete simulation;
-        }
-
-        SimulationFile(){ 
-            std::cout << "SimulationFile is constructed" << std::endl; 
-            //MyFile.open(myFileName);
-        }
-        ~SimulationFile(){ 
-            std::cout << "Destructing SimulationFile" << std::endl; 
-            //MyFile.close();
-        }
-        Simulation* simulation;
 };
 
-TEST_F(SimulationFile, openExistingFile){
-    ASSERT_EQ(0,simulation->openFile("Ass3.txt"));
-}
-
+// Subtest of suite creates a file (not randomly) and tries to open it.
 TEST_F(SimulationFile, openCreatedFile){
     const char* fileName = "CreatedFile.txt";
     createFile(fileName);
     ASSERT_EQ(0,simulation->openFile(fileName));
 }
 
+// Subtest of suite tries to open a non-existing file
 TEST_F(SimulationFile, openNonCreatedFile){
     const char* fileName = "NonCreatedFile.txt";
     ASSERT_EQ(1,simulation->openFile(fileName));
 }
 
+<<<<<<< Updated upstream
+// Subtest involves in running on a fixed test data 
+// This is to provide a baseline for comparing test results 
+// Will also be used for comparison when refactoring ass3-refactor
+=======
+>>>>>>> Stashed changes
 TEST_F(SimulationFile, workingRun){
     const char* fileName = "Ass3.txt";
     simulation->openFile(fileName);
     simulation->readFile();
     ASSERT_EQ(0,simulation->run());
 }
+
 
 int main(int argc, char **argv){
     testing::InitGoogleTest(&argc, argv);
