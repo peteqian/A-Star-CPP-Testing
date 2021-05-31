@@ -74,14 +74,3 @@ TEST_F(CycleTest, TestCycle){
     simulation->readFile();
     ASSERT_EQ(0, simulation->run());
 }
-
-TEST_F(CycleTest, TestCycleWithOracle){
-    const char* file = "cycleMiddle.txt";
-    writeVertices(file);
-    writeEdgesInCycle();
-    simulation->openFile(file);
-    simulation->readFile();
-    testOracle->openFile(file);
-    testOracle->readFile();
-    ASSERT_EQ(testOracle->run(), simulation->run());
-}
