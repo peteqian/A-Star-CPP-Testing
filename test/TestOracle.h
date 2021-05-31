@@ -49,9 +49,9 @@ class TestOracle{
         int readFile();
         int run();
         int astar();
-        void makeheap(int *heap, int heapSize);
-        void siftUp(int *heap, int i);
-        void siftDown (int *heap, int heapSize, int i);
+        void makeheap(int *heap, int heapSize, vertexStruct *vertices);
+        void siftUp(int *heap, int i, vertexStruct *verts);
+        void siftDown (int *heap, int heapSize, int i, vertexStruct *verts);
 };
 
 #endif

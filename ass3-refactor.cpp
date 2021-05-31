@@ -149,10 +149,18 @@ int Simulation::readFile(){
     }
     
     for(int i = 0; i < nVertices; i++){
-        calculateHeuristic(i, goalVertex);
+        vertices[i].heuristic = calculateHeuristic(i, goalVertex, vertices);
     }
 
     return 0;
+}
+
+double Simulation::calculateHeuristic(int vertexOne, int vertexTwo, vertex* verticesIn){
+    double distance = 0.0;
+    double deltaX = verticesIn[vertexTwo].xCoordinate-verticesIn[vertexOne].xCoordinate;
+    double deltaY = verticesIn[vertexTwo].yCoordinate-verticesIn[vertexOne].yCoordinate;
+    distance =  sqrt( pow(deltaX, 2) + pow(deltaY, 2));
+    return distance;
 }
 
 int Simulation::run(){
@@ -160,8 +168,6 @@ int Simulation::run(){
     // Run type
     int status = 0;
 
-
-    
     status = astar();
 
     // Report shortest Path information
@@ -216,9 +222,10 @@ int Simulation::run(){
             path2[nPath2Vertices++] = startVertex;
         }
     }
+    
 
     if(vertices[goalVertex].length == HUGE_VAL){
-        nPath2Vertices = 0;
+         nPath2Vertices = 0;
     }
 
     if(nPath2Vertices > 0){
@@ -296,11 +303,7 @@ int Simulation::astar(){
     return 1;
 }
 
-void Simulation::calculateHeuristic(int vertexOne, int vertexTwo){
-    double distance = 0.0;
-    distance =  sqrt( pow(vertices[vertexTwo].xCoordinate-vertices[vertexOne].xCoordinate,2)+ pow(vertices[vertexTwo].yCoordinate-vertices[vertexOne].yCoordinate,2));
-    vertices[vertexOne].heuristic = distance;
-}
+
 
 void Simulation::makeheap(int *heap, int heapSize, vertex *verticesIn){
     for (int i = heapSize/2 - 1; i >= 0; i--){

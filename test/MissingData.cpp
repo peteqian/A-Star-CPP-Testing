@@ -8,16 +8,13 @@ class MissingData : public::testing::Test {
     protected:
         ofstream MyFile;
         Simulation* simulation;
-        TestOracle* testOracle;
 
         MissingData(){ 
             simulation = new Simulation();
-            testOracle = new TestOracle();
             std::cout << "MissingData Class is constructed" << std::endl; 
             
         }
         ~MissingData(){ 
-            delete testOracle;
             delete simulation;
             MyFile.close();
             std::cout << "Destructing MissingData Class" << std::endl; 
@@ -149,11 +146,7 @@ TEST_F(MissingData, Missing_No_Vertices_Edges){
     writeMissingVerticeEdges(fileName);
     writeCompletePath();
     simulation->openFile(fileName);               
-    //ASSERT_EQ(1,simulation->readFile());
-
-    // Compare with Test Oracle
-    testOracle->openFile(fileName);
-    ASSERT_EQ( testOracle->readFile(), simulation->readFile());
+    ASSERT_EQ(1,simulation->readFile());
 }
 
 TEST_F(MissingData, OneNode){
@@ -161,11 +154,16 @@ TEST_F(MissingData, OneNode){
     writeOneNode(fileName);
     writeCompletePath();
     simulation->openFile(fileName);           
-    //ASSERT_EQ(1,simulation->readFile());
+    ASSERT_EQ(1,simulation->readFile());
+}
 
-    // Compare with Test Oracle
-    testOracle->openFile(fileName);
-    ASSERT_EQ( testOracle->readFile(), simulation->readFile());
+// Write in functionality for this one.
+TEST_F(MissingData, OneEdge){
+    const char* fileName = "OneEdge.txt";
+    writeOneNode(fileName);
+    writeCompletePath();
+    simulation->openFile(fileName);           
+    ASSERT_EQ(1,simulation->readFile());
 }
 
 TEST_F(MissingData, missingVerticesFromInputData){
@@ -173,11 +171,7 @@ TEST_F(MissingData, missingVerticesFromInputData){
     writeMissingVertices(fileName);
     writeCompletePath();
     simulation->openFile(fileName);            
-    //ASSERT_EQ(1,simulation->readFile());
-
-    // Compare with Test Oracle
-    testOracle->openFile(fileName);
-    ASSERT_EQ( testOracle->readFile(), simulation->readFile());
+    ASSERT_EQ(1,simulation->readFile());
 }
 
 
@@ -186,11 +180,7 @@ TEST_F(MissingData, missingEdgesFromInputData){
     writeVertices(fileName);
     writeMissingEdges();
     simulation->openFile(fileName);             
-    //ASSERT_EQ(1,simulation->readFile());
-
-    // Compare with Test Oracle
-    testOracle->openFile(fileName);
-    ASSERT_EQ( testOracle->readFile(), simulation->readFile());
+    ASSERT_EQ(1,simulation->readFile());
 }
 
 TEST_F(MissingData, writeMissingStartGoalPosition){
@@ -198,11 +188,7 @@ TEST_F(MissingData, writeMissingStartGoalPosition){
     writeVertices(fileName);
     writeMissingGoalVertex();
     simulation->openFile(fileName);       
-    //ASSERT_EQ(1,simulation->readFile());
-
-    // Compare with Test Oracle
-    testOracle->openFile(fileName);
-    ASSERT_EQ( testOracle->readFile(), simulation->readFile());
+    ASSERT_EQ(1,simulation->readFile());
 }
 
 TEST_F(MissingData, writeOneNode){

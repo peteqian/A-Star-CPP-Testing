@@ -244,7 +244,7 @@ int TestOracle::astar(){
         vertices[i].previous = startVertex;
     }
 
-    makeheap(candidate, nCandidates);
+    makeheap(candidate, nCandidates, vertices);
 
     while(candidate[0] != goalVertex && vertices[candidate[0]].length != HUGE_VAL){
         // Remove the best candidate
@@ -252,7 +252,7 @@ int TestOracle::astar(){
 
         nCandidates--;
         candidate[0] = candidate[nCandidates];
-        siftDown(candidate, nCandidates,0);
+        siftDown(candidate, nCandidates,0, vertices);
 
         for(int i = 0; i < nCandidates; i++){
             current = vertices[candidate[i]].length;
@@ -262,7 +262,7 @@ int TestOracle::astar(){
                 // Update candidates values and restore the heap
                 vertices [candidate [i]].length = update;
                 vertices [candidate [i]].previous = selected;
-                siftUp (candidate, i);
+                siftUp (candidate, i, vertices);
             }
         }
     }
@@ -275,13 +275,13 @@ int TestOracle::astar(){
     return 1;
 }
 
-void TestOracle::makeheap(int *heap, int heapSize){
+void TestOracle::makeheap(int *heap, int heapSize, vertexStruct *vertices){
     for (int i = heapSize/2; i >= 0; i--){
-        siftDown(heap, heapSize, i);
+        siftDown(heap, heapSize, i, vertices);
     }
 }
 
-void TestOracle::siftUp(int *heap, int i){
+void TestOracle::siftUp(int *heap, int i, vertexStruct *verts){
 
     int temp;
 
@@ -290,8 +290,8 @@ void TestOracle::siftUp(int *heap, int i){
     }
 
     int p = (i-1)/2;
-    double iVal = vertices[heap[i]].length + vertices[heap[i]].heuristic;
-    double pVal = vertices[heap[p]].length + vertices[heap[p]].heuristic;
+    double iVal = verts[heap[i]].length + verts[heap[i]].heuristic;
+    double pVal = verts[heap[p]].length + verts[heap[p]].heuristic;
 
     if(pVal < iVal) {
         return;
@@ -300,11 +300,11 @@ void TestOracle::siftUp(int *heap, int i){
     temp = heap[p];
     heap[p] = heap[i];
     heap[i] = temp;
-    siftUp (heap, p);
+    siftUp (heap, p, verts);
     return ;
 }
 
-void TestOracle::siftDown (int *heap, int heapSize, int i){
+void TestOracle::siftDown (int *heap, int heapSize, int i, vertexStruct *verts){
     int temp, c;
     double iVal, cVal, c1Val ;
     c = 2 * i + 1;
@@ -312,11 +312,11 @@ void TestOracle::siftDown (int *heap, int heapSize, int i){
         return;
     }
 
-    iVal = vertices [heap[i]].length + vertices [heap[i]].heuristic ;
-    cVal = vertices [heap[c]].length + vertices [heap[c]].heuristic ;
+    iVal = verts[heap[i]].length + verts[heap[i]].heuristic ;
+    cVal = verts[heap[c]].length + verts[heap[c]].heuristic ;
 
     if (c + 1 < heapSize ) {
-        c1Val = vertices [heap[c + 1]].length + vertices [heap[c + 1]].heuristic;
+        c1Val = verts [heap[c + 1]].length + verts [heap[c + 1]].heuristic;
         if (c1Val < cVal ){
             c++;
             cVal = c1Val;
@@ -330,6 +330,6 @@ void TestOracle::siftDown (int *heap, int heapSize, int i){
     temp = heap[c];
     heap[c] = heap[i];
     heap[i] = temp;
-    siftDown (heap, heapSize, c);
+    siftDown (heap, heapSize, c, verts);
     return;
 }

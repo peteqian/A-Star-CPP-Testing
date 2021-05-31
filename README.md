@@ -20,11 +20,7 @@ Check your CMake and compiler has been installed.
 
 ```cmake --version```
 
-![cmake --version](cmake--version.png?raw=true "cmake --version")
-
 ```g++ --version```
-
-![g++ --version](g--version.png?raw=true "g++ --version")
 
 # Build set-up.
 ## Windows
