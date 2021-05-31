@@ -52,6 +52,7 @@ int HeapTest::check(int heap[]){
 }
 
 
+ 
 //Creates random sized vertices array populated with vertices with random heuristics
 void HeapTest::createRandomVertices(){
     srand(time(NULL));
@@ -80,10 +81,11 @@ void HeapTest::printHeap(int size){
     for (int i = 0; i < size; i++) {
         cout << verticesTest[heap[i]].heuristic << "\t";
     }
- 
 }
 
+
 TEST_F(HeapTest, subtestOne){
+    //run the makeheap function to assert if it successful ordered random vertices into a heap
     createRandomVertices();
     simulation->makeheap(heap, size, verticesTest);
     ASSERT_EQ(check(heap), 1);

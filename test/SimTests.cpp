@@ -50,6 +50,9 @@ TEST_F(SimulationFile, openNonCreatedFile){
     ASSERT_EQ(1,simulation->openFile(fileName));
 }
 
+// Subtest involves in running on a fixed test data 
+// This is to provide a baseline for comparing test results 
+// Will also be used for comparison when refactoring ass3-refactor
 TEST_F(SimulationFile, workingRun){
     const char* fileName = "Ass3.txt";
     simulation->openFile(fileName);
