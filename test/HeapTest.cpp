@@ -32,11 +32,20 @@ class HeapTest : public::testing::Test {
 
 
 int HeapTest::check(int heap[]){
+    int parentWeight, child1Weight, child2Weight;
 
     for(int i = 0; i <= (size-2)/2; i++){
-        if(verticesTest[heap[i]].length + verticesTest[heap[i]].heuristic  > verticesTest[heap[2*i+1]].length + verticesTest[heap[2*i+1]].heuristic 
-        || (2*i + 2 != size && verticesTest[heap[i]].length + verticesTest[heap[i]].heuristic > verticesTest[heap[2*i+2]].length + verticesTest[heap[2*i+2]].heuristic)){
-            return -1; // we know there is an error, so return false
+        parentWeight = verticesTest[heap[i]].length + verticesTest[heap[i]].heuristic;
+        child1Weight = verticesTest[heap[2*i+1]].length + verticesTest[heap[2*i+1]].heuristic;
+        
+        //make sure the second child is not out of range to avoid segmentation fault
+        if(2*i + 2 != size){
+            child2Weight = verticesTest[heap[2*i+2]].length + verticesTest[heap[2*i+2]].heuristic;
+        } else {child2Weight = 0;}
+
+        // If either child is larger than parent, heap has an error so return false 
+        if(parentWeight  > child1Weight || (2*i + 2 != size && parentWeight > child2Weight)){
+            return -1;
         }
     }
    return 1; // all checks succeeded, return true
@@ -53,12 +62,12 @@ void HeapTest::createRandomVertices(){
     verticesTest = new vertex[size];
     heap = new int[size];
 
+    //creates random values for heuristics and maps index to heap array to be sorted
     for(int i = 0 ; i < size; i++){
         verticesTest[i].length = 0; 
         verticesTest[i].heuristic = rand()%20+1;
-        heap[i] = i;
 
-        cout << verticesTest[i].heuristic << "\t" << heap[i] << endl;
+        heap[i] = i;
     }
 
 }
@@ -74,11 +83,11 @@ void HeapTest::printHeap(int size){
     for (int i = 0; i < size; i++) {
         cout << verticesTest[heap[i]].heuristic << "\t";
     }
-    cout << endl; 
 }
 
 
 TEST_F(HeapTest, subtestOne){
+    //run the makeheap function to assert if it successful ordered random vertices into a heap
     createRandomVertices();
     simulation->makeheap(heap, size, verticesTest);
     ASSERT_EQ(check(heap), 1);
