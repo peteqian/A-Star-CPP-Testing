@@ -43,11 +43,8 @@ int HeapTest::check(int heap[]){
 }
 
 
-<<<<<<< Updated upstream
  
-=======
 //Creates random sized vertices array populated with vertices with random heuristics
->>>>>>> Stashed changes
 void HeapTest::createRandomVertices(){
     srand(time(NULL));
 
@@ -80,37 +77,8 @@ void HeapTest::printHeap(int size){
     cout << endl; 
 }
 
+
 TEST_F(HeapTest, subtestOne){
-    createRandomVertices();
-<<<<<<< Updated upstream
-    cout << "Before makeheap" << endl;
-    printHeap(size);
-    //simulation->makeheap(heap, size, verticesTest);
-    cout << "After makeheap" << endl;
-    printHeap(size);
-    cout << "Check heap returns: " << check(heap) << endl;
-    //cout << "Check heap returns: " << isMinHeap(heap, size) << endl;
-=======
-    // cout << "Before makeheap" << endl;
-    // printHeap(size);
-
-    simulation->makeheap(heap, size, verticesTest);
-    // cout << "After simulation makeheap" << endl;
-    // printHeap(size);
-    int simMakeHeap = check(heap);
-    // cout << "SimCheck heap returns: " << simMakeHeap << endl;
-
-    testOracle->makeheap(heap, size, verticesStructTest);
-    // cout << "After testOracle makeheap" << endl;
-    // printHeap(size);
-    int oracleMakeHeap = check(heap);
-    // cout << "TestOracleCheck heap returns: " << oracleMakeHeap << endl;
-
-    ASSERT_EQ(simMakeHeap, oracleMakeHeap);
->>>>>>> Stashed changes
-}
-
-TEST_F(HeapTest, subtestTwo){
     createRandomVertices();
     simulation->makeheap(heap, size, verticesTest);
     ASSERT_EQ(check(heap), 1);
