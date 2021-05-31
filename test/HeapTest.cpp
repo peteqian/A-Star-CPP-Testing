@@ -8,7 +8,6 @@ class HeapTest : public::testing::Test {
         int *heap;
         int size = 0;
         vertex *verticesTest;
-        vertexStruct *verticesStructTest;
         Simulation* simulation;
         TestOracle* testOracle;
         HeapTest(){ 
@@ -53,28 +52,21 @@ int HeapTest::check(int heap[]){
 }
 
 
- //Creates random sized vertices array populated with vertices with random heuristics
+//Creates random sized vertices array populated with vertices with random heuristics
 void HeapTest::createRandomVertices(){
     srand(time(NULL));
 
-    size = rand()%10+5;
+    size = rand()%100+5;
     
     verticesTest = new vertex[size];
-    verticesStructTest = new vertexStruct[size];
     heap = new int[size];
 
     //creates random values for heuristics and maps index to heap array to be sorted
     for(int i = 0 ; i < size; i++){
         verticesTest[i].length = 0; 
-
-        int randH = rand()%20+1;
-        verticesTest[i].heuristic = randH;
-        verticesStructTest[i].heuristic = randH;
-
+        verticesTest[i].heuristic = rand()%20+1;
         heap[i] = i;
-
     }
-
 }
 
 void HeapTest::printHeap(int size){
@@ -88,29 +80,11 @@ void HeapTest::printHeap(int size){
     for (int i = 0; i < size; i++) {
         cout << verticesTest[heap[i]].heuristic << "\t";
     }
-
-    cout << "\nPrinting the verticesStructTest array. " << endl;
-    for (int i = 0; i < size; i++) {
-        cout << verticesStructTest[heap[i]].heuristic << "\t";
-    }
-    cout << endl; 
+ 
 }
 
 TEST_F(HeapTest, subtestOne){
     createRandomVertices();
-    cout << "Before makeheap" << endl;
-    printHeap(size);
     simulation->makeheap(heap, size, verticesTest);
-    cout << "After simulation makeheap" << endl;
-    printHeap(size);
-    int simMakeHeap = check(heap);
-    cout << "SimCheck heap returns: " << simMakeHeap << endl;
-
-    testOracle->makeheap(heap, size, verticesStructTest);
-    cout << "After testOracle makeheap" << endl;
-    printHeap(size);
-    int oracleMakeHeap = check(heap);
-    cout << "TestOracleCheck heap returns: " << oracleMakeHeap << endl;
-
-    ASSERT_EQ(simMakeHeap, oracleMakeHeap);
+    ASSERT_EQ(check(heap), 1);
 }
