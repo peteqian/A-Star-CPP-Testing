@@ -142,9 +142,11 @@ int TestOracle::run(){
     
     // Run type
     int status = 0;
+
     status = astar();
 
     // Report shortest Path information
+
     if (status == 0){
         cout << "---TestOracle---" << endl;
         cout << "The shortest path has a length of " << vertices[goalVertex].length << endl;
@@ -188,6 +190,7 @@ int TestOracle::run(){
 
 
         if(status == 0 && vertices[goalVertex].length < bestLength){
+            bestLength = vertices[goalVertex].length;
             nPath2Vertices = 0;
             for(int i = goalVertex; i != startVertex; i = vertices[i].previous){
                 path2[nPath2Vertices++] = i;
@@ -195,14 +198,15 @@ int TestOracle::run(){
             path2[nPath2Vertices++] = startVertex;
         }
     }
-
+    
 
     if(vertices[goalVertex].length == HUGE_VAL){
-        nPath2Vertices = 0;
+         nPath2Vertices = 0;
     }
-    
+
     if(nPath2Vertices > 0){
         cout << "The 2nd shortest path has a length of " << vertices[goalVertex].length << endl;
+
         cout << " The vertices on this path are: ";
         for(int i = nPath2Vertices; i > 0; i--){
             cout << path2[i-1]+1 << " ";

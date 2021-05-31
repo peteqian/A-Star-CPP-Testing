@@ -137,7 +137,6 @@ void MissingData::writeCompletePath(){
 void MissingData::writeOneEdge(){
 
     MyFile << 1 << "\t" << 2 << "\t" << 1 << endl; 
-    MyFile << no_of_edges << "\t" << no_of_edges << "\t" << 1 << endl; 
     MyFile << 1 << "\t" << no_of_edges << endl;
     
 }
