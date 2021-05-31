@@ -1,5 +1,4 @@
 #include "../ass3-refactor.h"
-#include "TestOracle.h"
 #include <gtest/gtest.h>
 #include <fstream> 
 
@@ -10,11 +9,9 @@ class SimulationFile : public::testing::Test {
         ofstream dest;
         ofstream MyFile;
         Simulation* simulation;
-        TestOracle* testOracle;
 
         SimulationFile(){ 
             simulation = new Simulation();
-            testOracle = new TestOracle();
 
             // Copy the static Input Test Data into location of the test folder
             std::ifstream src("../../Ass3.txt", std::ios::binary);
@@ -25,7 +22,6 @@ class SimulationFile : public::testing::Test {
         }
         ~SimulationFile(){ 
             MyFile.close();
-            delete testOracle;
             delete simulation;
             std::cout << "Destructing SimulationFile" << std::endl; 
             
@@ -45,13 +41,13 @@ class SimulationFile : public::testing::Test {
 TEST_F(SimulationFile, openCreatedFile){
     const char* fileName = "CreatedFile.txt";
     createFile(fileName);
-    ASSERT_EQ(testOracle->openFile(fileName),simulation->openFile(fileName));
+    ASSERT_EQ(0,simulation->openFile(fileName));
 }
 
 // Subtest of suite tries to open a non-existing file
 TEST_F(SimulationFile, openNonCreatedFile){
     const char* fileName = "NonCreatedFile.txt";
-    ASSERT_EQ(testOracle->openFile(fileName),simulation->openFile(fileName));
+    ASSERT_EQ(1,simulation->openFile(fileName));
 }
 
 // Subtest involves in running on a fixed test data 
@@ -61,10 +57,9 @@ TEST_F(SimulationFile, workingRun){
     const char* fileName = "Ass3.txt";
     simulation->openFile(fileName);
     simulation->readFile();
-    testOracle->openFile(fileName);
-    testOracle->readFile();
-    ASSERT_EQ(testOracle->run(),simulation->run());
+    ASSERT_EQ(0,simulation->run());
 }
+
 
 int main(int argc, char **argv){
     testing::InitGoogleTest(&argc, argv);

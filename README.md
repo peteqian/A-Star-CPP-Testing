@@ -20,7 +20,11 @@ Check your CMake and compiler has been installed.
 
 ```cmake --version```
 
+![cmake --version](cmake--version.png?raw=true "cmake --version")
+
 ```g++ --version```
+
+![g++ --version](g--version.png?raw=true "g++ --version")
 
 # Build set-up.
 ## Windows
@@ -62,7 +66,7 @@ Documentation of test case creation can be found [here](https://google.github.io
 ## Unix
 1. Ensure you have saved your source code files.
 2. Run the make command in the build directory
-> $ cd ./build && make
+> $ cd /build && make
 3. For any test data, the program DOES NOT READ from ```build/test``` directory for any TEST DATA AND MUST READ FROM ```build/```
 3. Then run the program
 > ./build/test/SimTests

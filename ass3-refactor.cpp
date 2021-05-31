@@ -101,6 +101,8 @@ int Simulation::readFile(){
         // Feed in edge weight afterwards
         fin >> edgeWeight[row-1][col-1];
 
+        //cout << "\tweight: " << edgeWeight[row-1][col-1] << endl;
+
         // With this condition, the program cannot accept negative edge weight
         if(edgeWeight[row-1][col-1] < 0){
             cerr << "Cannot input negative edge weight." << endl;
