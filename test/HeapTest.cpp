@@ -66,10 +66,8 @@ void HeapTest::createRandomVertices(){
     for(int i = 0 ; i < size; i++){
         verticesTest[i].length = 0; 
         verticesTest[i].heuristic = rand()%20+1;
-
         heap[i] = i;
     }
-
 }
 
 void HeapTest::printHeap(int size){

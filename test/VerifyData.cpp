@@ -1,7 +1,8 @@
 #include "../ass3-refactor.h"
-#include "TestOracle.h"
 #include <gtest/gtest.h>
 #include <fstream> 
+
+using namespace std;
 
 class InappropriateDataTypes : public::testing::Test {
 
@@ -11,19 +12,21 @@ class InappropriateDataTypes : public::testing::Test {
     protected:
         ofstream outData;
         Simulation* simulation;
-        TestOracle* testOracle;
+
+        virtual void SetUp() override {
+            simulation = new Simulation();
+        }
+
+        virtual void TearDown() override {
+            delete simulation;
+        }
 
         InappropriateDataTypes(){ 
-            simulation = new Simulation();
-            testOracle = new TestOracle();
-            std::cout << "InappropriateDataTypes Class is constructed." << std::endl; 
+            std::cout << "VerifyData Class is constructed" << std::endl; 
         }
-        ~InappropriateDataTypes(){
-            outData.close(); 
-            delete testOracle;
-            delete simulation;
-            std::cout << "InappropriateDataTypes Class is destroyed." << std::endl; 
-            
+        ~InappropriateDataTypes(){ 
+            std::cout << "Destructing VerifyData Class" << std::endl; 
+            outData.close();
         }
 
     public:
@@ -33,20 +36,22 @@ class InappropriateDataTypes : public::testing::Test {
         void writeCorrectStartGoal();
         void writeCharNumberOf(const char* fileName);
         void writeCharVertices();
-        void writeCharEdges();
+        void writeCharEdgeVertexLabels();
+        void writeCharEdgeWeights();
         void writeCharStartGoal();
         void writeFloatVertexLabel();
         void writeFloatEdgeVertexLabels();
         void writeNegativeNumberOf(const char* fileName);
         void writeNegativeVertices();
-        void writeNegativeEdges();
+        void writeNegativeEdgeVertexLabels();
         void writeNegativeEdgeWeight();
         void writeNegativeStartGoal();
 };
 
+// The function will print valid values for the "Number Of" variables to a file
 void InappropriateDataTypes::writeCorrectNumberOf(const char* fileName){
     outData.open(fileName);
-    std::cout << "Opened File: " << fileName << std::endl;
+    cout << "Opened File: " << fileName << endl;
 
     // Set nVertices and nEdges
     srand(time(NULL));
@@ -57,6 +62,7 @@ void InappropriateDataTypes::writeCorrectNumberOf(const char* fileName){
     outData << no_of_vertices << "\t" << no_of_edges << endl;
 }
 
+// The function will print valid values for the "Vertices Array" variables to a file
 void InappropriateDataTypes::writeCorrectVertices(){
     srand(time(NULL));
     // Write node, posX, posY
@@ -67,6 +73,7 @@ void InappropriateDataTypes::writeCorrectVertices(){
     }
 }
 
+// The function will print valid values for the "Edge Square Matrix" variables to a file
 void InappropriateDataTypes::writeCorrectEdges(){
     for(int i = 1; i < no_of_edges; i++){
         outData << i << "\t" << i+1 << "\t" << 1 << endl; 
@@ -74,11 +81,13 @@ void InappropriateDataTypes::writeCorrectEdges(){
     outData << no_of_edges << "\t" << no_of_edges << "\t" << 1 << endl; 
 }
 
+// The function will print valid values for the "Start" and "Goal" variables to a file
 void InappropriateDataTypes::writeCorrectStartGoal(){
     outData << 1 << "\t" << no_of_edges << endl;
     outData.close();
 }
 
+// The function will print invalid values for the "Number Of" variables to a file (char)
 void InappropriateDataTypes::writeCharNumberOf(const char* fileName){
     outData.open(fileName);
     cout << "Opened File: " << fileName << endl;
@@ -95,6 +104,7 @@ void InappropriateDataTypes::writeCharNumberOf(const char* fileName){
     outData << c << "\t" << a << endl; 
 }
 
+// The function will print invalid values for the "Vertices Array" variables to a file (char)
 void InappropriateDataTypes::writeCharVertices(){
     srand(time(NULL));
 
@@ -110,7 +120,8 @@ void InappropriateDataTypes::writeCharVertices(){
     }
 }
 
-void InappropriateDataTypes::writeCharEdges(){
+// The function will print invalid values for the "Edge Vertex Labels" variables to a file (char)
+void InappropriateDataTypes::writeCharEdgeVertexLabels(){
     srand(time(NULL));
 
     for(int i = 1; i < no_of_edges; i++){
@@ -124,6 +135,20 @@ void InappropriateDataTypes::writeCharEdges(){
     outData << 'a' << "\t" << 'b' << "\t" << 'c' << endl; 
 }
 
+// The function will print an invalid value for the "Edge Weight" variable to a file (char)
+void InappropriateDataTypes::writeCharEdgeWeights(){
+    srand(time(NULL));
+
+    for(int i = 1; i < no_of_edges; i++){
+        int r = rand()%26; 
+
+        char c = 'c' + r;
+        outData << i << "\t" << i+1 << "\t" << c << endl; 
+    }
+    outData << 1 << "\t" << 2 << "\t" << 'c' << endl; 
+}
+
+// The function will print invalid values for the "Start" and "Goal" variables to a file (char)
 void InappropriateDataTypes::writeCharStartGoal(){
     char m, n;
     int r;
@@ -137,26 +162,29 @@ void InappropriateDataTypes::writeCharStartGoal(){
     outData.close();
 }
 
+// The function will print an invalid value for the "Vertex Label" variable to a file (float)
 void InappropriateDataTypes::writeFloatVertexLabel(){
-    srand(static_cast <unsigned> (time(NULL)));
+    srand(static_cast <unsigned> (time(0)));
     // Write node, posX, posY
     for(int i = 1; i <= no_of_vertices; i++){
-        // Node \t posX \t posY
+        // Node \t posX \t posY 
         float x = 1 + static_cast <float> (rand()) / (static_cast <float>(RAND_MAX/(5-1)));
-        outData << x << "\t" << i << "\t" << i+1 << endl;
+        outData << x << "\t" << i << "\t" << i << endl;
     }
 }
 
+// The function will print invalid values for the "Edge Vertex Labels" variables to a file (float)
 void InappropriateDataTypes::writeFloatEdgeVertexLabels(){
     srand(time(NULL));
 
     for(int i = 1; i < no_of_edges; i++){
-        float a = 1 + static_cast <float> (rand()) / (static_cast <float>(RAND_MAX/(5-1)));
-        outData << i+a+a << "\t" << a << "\t" << i+a << endl; 
+        float a = 1 + static_cast <float> (rand()) / (static_cast <float>(RAND_MAX/(no_of_vertices-1)));
+        outData << a << "\t" << a << "\t" << i+a << endl; 
     }
     outData << no_of_edges << "\t" << no_of_edges << "\t" << 1 << endl; 
 }
 
+// The function will print invalid values for the "Number Of" variables to a file (negative int)
 void InappropriateDataTypes::writeNegativeNumberOf(const char* fileName){
     outData.open(fileName);
     cout << "Opened File: " << fileName << endl;
@@ -170,6 +198,7 @@ void InappropriateDataTypes::writeNegativeNumberOf(const char* fileName){
     outData << -no_of_vertices << "\t" << -no_of_edges << endl;
 }
 
+// The function will print invalid values for the "Vertices Array" variables to a file (negative int)
 void InappropriateDataTypes::writeNegativeVertices(){
     srand(time(NULL));
     // Write node, posX, posY
@@ -180,13 +209,15 @@ void InappropriateDataTypes::writeNegativeVertices(){
     }
 }
 
-void InappropriateDataTypes::writeNegativeEdges(){
+// The function will print invalid values for the "Edge Vertex Labels" variables to a file (negative int)
+void InappropriateDataTypes::writeNegativeEdgeVertexLabels(){
     for(int i = 1; i < no_of_edges; i++){
         outData << -i << "\t" << -i+1 << "\t" << -1 << endl;
     }
     outData << -no_of_edges << "\t" << -no_of_edges << "\t" << -1 << endl; 
 }
 
+// The function will print an invalid value for the "Edge Weight" variable to a file (negative int)
 void InappropriateDataTypes::writeNegativeEdgeWeight(){
     for(int i = 1; i < no_of_edges; i++){
         outData << i << "\t" << i+1 << "\t" << -1 << endl;
@@ -194,66 +225,62 @@ void InappropriateDataTypes::writeNegativeEdgeWeight(){
     outData << no_of_edges << "\t" << no_of_edges << "\t" << -1 << endl; 
 }
 
+// The function will print invalid values for the "Start" and "Goal" variables to a file (negative int)
 void InappropriateDataTypes::writeNegativeStartGoal(){
     outData << -1 << "\t" << -no_of_edges << endl;
     outData.close();
 }
 
 
+
 TEST_F(InappropriateDataTypes, InputCorrectValues){
-    const char* file = "VerifyData_CorrectValues.txt";
+    const char* file = "InappropriateDataTypes_CorrectValues.txt";
     writeCorrectNumberOf(file);
     writeCorrectVertices();
     writeCorrectEdges();
     writeCorrectStartGoal();
     simulation->openFile(file);
-    //ASSERT_EQ(0, simulation->readFile());
-
-    // TestOracle Check
-    testOracle->openFile(file);
-    ASSERT_EQ(testOracle->readFile(), simulation->readFile());
+    ASSERT_EQ(0, simulation->readFile());
 }
 
 TEST_F(InappropriateDataTypes, InputCharValues_NumberOf){
-    const char* file = "VerifyData_CharValues_NumberOf.txt";
+    const char* file = "InappropriateDataTypes_CharValues_NumberOf.txt";
     writeCharNumberOf(file);
     writeCorrectVertices();
     writeCorrectEdges();
     writeCorrectStartGoal();
     simulation->openFile(file);
-    //ASSERT_EQ(1, simulation->readFile());
-
-    // TestOracle Check
-    testOracle->openFile(file);
-    ASSERT_EQ(testOracle->readFile(), simulation->readFile());
+    ASSERT_EQ(1, simulation->readFile());
 }
 
-TEST_F(InappropriateDataTypes, InputCharValues_Edges){
-    const char* file = "VerifyData_CharValues_Edges.txt";
+TEST_F(InappropriateDataTypes, InputCharValues_EdgeVertexLabels){
+    const char* file = "InappropriateDataTypes_CharValues_EdgeVertexLabels.txt";
     writeCorrectNumberOf(file);
     writeCorrectVertices();
-    writeCharEdges();
+    writeCharEdgeVertexLabels();
     writeCorrectStartGoal();
     simulation->openFile(file);
-    //ASSERT_EQ(1, simulation->readFile());
+    ASSERT_EQ(1, simulation->readFile());
+}
 
-    // TestOracle Check
-    testOracle->openFile(file);
-    ASSERT_EQ(testOracle->readFile(), simulation->readFile());
+TEST_F(InappropriateDataTypes, InputCharValues_EdgeWeights){
+    const char* file = "InappropriateDataTypes_CharValues_EdgeWeights.txt";
+    writeCorrectNumberOf(file);
+    writeCorrectVertices();
+    writeCharEdgeWeights();
+    writeCorrectStartGoal();
+    simulation->openFile(file);
+    ASSERT_EQ(1, simulation->readFile());
 }
 
 TEST_F(InappropriateDataTypes, InputCharValues_Vertices){
-    const char* file = "VerifyData_CharValues_Vertices.txt";
+    const char* file = "InappropriateDataTypes_CharValues_Vertices.txt";
     writeCorrectNumberOf(file);
     writeCharVertices();
     writeCorrectEdges();
     writeCorrectStartGoal();
     simulation->openFile(file);
-    //ASSERT_EQ(1, simulation->readFile());
-
-    // TestOracle Check
-    testOracle->openFile(file);
-    ASSERT_EQ(testOracle->readFile(), simulation->readFile());
+    ASSERT_EQ(1, simulation->readFile());
 }
 
 TEST_F(InappropriateDataTypes, InputCharValues_StartGoal){
@@ -263,81 +290,57 @@ TEST_F(InappropriateDataTypes, InputCharValues_StartGoal){
     writeCorrectEdges();
     writeCharStartGoal();
     simulation->openFile(file);
-    //ASSERT_EQ(1, simulation->readFile());
-
-    // TestOracle Check
-    testOracle->openFile(file);
-    ASSERT_EQ(testOracle->readFile(), simulation->readFile());
+    ASSERT_EQ(1, simulation->readFile());
 }
 
 TEST_F(InappropriateDataTypes, InputFloatValues_EdgeVertexLabels){
-    const char* file = "VerifyData_FloatValues_EdgeVertexLabels.txt";
+    const char* file = "InappropriateDataTypes_FloatValues_EdgeVertexLabels.txt";
     writeCorrectNumberOf(file);
     writeCorrectVertices();
     writeFloatEdgeVertexLabels();
     writeCorrectStartGoal();
     simulation->openFile(file);
-    //ASSERT_EQ(1, simulation->readFile());
-
-    // TestOracle Check
-    testOracle->openFile(file);
-    ASSERT_EQ(testOracle->readFile(), simulation->readFile());
+    ASSERT_EQ(1, simulation->readFile());
 }
 
 TEST_F(InappropriateDataTypes, InputFloatValues_VertexLabel){
-    const char* file = "VerifyData_FloatValues_VertexLabel.txt";
+    const char* file = "InappropriateDataTypes_FloatValues_VertexLabel.txt";
     writeCorrectNumberOf(file);
     writeFloatVertexLabel();
     writeCorrectEdges();
     writeCorrectStartGoal();
     simulation->openFile(file);
-    //ASSERT_EQ(1, simulation->readFile());
-
-    // TestOracle Check
-    testOracle->openFile(file);
-    ASSERT_EQ(testOracle->readFile(), simulation->readFile());
+    ASSERT_EQ(1, simulation->readFile());
 }
 
 TEST_F(InappropriateDataTypes, InputNegativeIntValues_NumberOf){
-    const char* file = "VerifyData_NegativeIntValues_NumberOf.txt";
+    const char* file = "InappropriateDataTypes_NegativeIntValues_NumberOf.txt";
     writeNegativeNumberOf(file);
     writeCorrectVertices();
     writeCorrectEdges();
     writeCorrectStartGoal();
     simulation->openFile(file);
-    //ASSERT_EQ(1, simulation->readFile());
-
-    // TestOracle Check
-    testOracle->openFile(file);
-    ASSERT_EQ(testOracle->readFile(), simulation->readFile());
+    ASSERT_EQ(1, simulation->readFile());
 }
 
-TEST_F(InappropriateDataTypes, InputNegativeIntValues_Edges){
-    const char* file = "VerifyData_NegativeIntValues_Edges.txt";
+TEST_F(InappropriateDataTypes, InputNegativeIntValues_EdgeVertexLabels){
+    const char* file = "InappropriateDataTypes_NegativeIntValues_EdgeVertexLabels.txt";
     writeCorrectNumberOf(file);
     writeCorrectVertices();
-    writeNegativeEdges();
+    writeNegativeEdgeVertexLabels();
     writeCorrectStartGoal();
     simulation->openFile(file);
-    //ASSERT_EQ(1, simulation->readFile());
-
-    // TestOracle Check
-    testOracle->openFile(file);
-    ASSERT_EQ(testOracle->readFile(), simulation->readFile());
+    ASSERT_EQ(1, simulation->readFile());
 }
 
 TEST_F(InappropriateDataTypes, InputNegativeIntValues_EdgeWeight){
-    const char* file = "VerifyData_NegativeIntValues_EdgeWeight.txt";
+    const char* file = "InappropriateDataTypes_NegativeIntValues_EdgeWeight.txt";
     writeCorrectNumberOf(file);
     writeCorrectVertices();
     writeNegativeEdgeWeight();
     writeCorrectStartGoal();
     simulation->openFile(file);
-    //ASSERT_EQ(1, simulation->readFile());
-
-    // TestOracle Check
-    testOracle->openFile(file);
-    ASSERT_EQ(testOracle->readFile(), simulation->readFile());
+    ASSERT_EQ(1, simulation->readFile());
 }
 
 TEST_F(InappropriateDataTypes, InputNegativeIntValues_Vertices){
@@ -347,11 +350,7 @@ TEST_F(InappropriateDataTypes, InputNegativeIntValues_Vertices){
     writeCorrectEdges();
     writeCorrectStartGoal();
     simulation->openFile(file);
-    //ASSERT_EQ(1, simulation->readFile());
-
-    // TestOracle Check
-    testOracle->openFile(file);
-    ASSERT_EQ(testOracle->readFile(), simulation->readFile());
+    ASSERT_EQ(1, simulation->readFile());
 }
 
 TEST_F(InappropriateDataTypes, InputNegativeIntValues_StartGoal){
@@ -361,9 +360,5 @@ TEST_F(InappropriateDataTypes, InputNegativeIntValues_StartGoal){
     writeCorrectEdges();
     writeNegativeStartGoal();
     simulation->openFile(file);
-    //ASSERT_EQ(1, simulation->readFile());
-
-    // TestOracle Check
-    testOracle->openFile(file);
-    ASSERT_EQ(testOracle->readFile(), simulation->readFile());
+    ASSERT_EQ(1, simulation->readFile());
 }
