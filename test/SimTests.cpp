@@ -1,5 +1,6 @@
 #include "../ass3-refactor.h"
 #include <gtest/gtest.h>
+#include "TestOracle.h"
 #include <fstream> 
 
 class SimulationFile : public::testing::Test {
@@ -9,10 +10,11 @@ class SimulationFile : public::testing::Test {
         ofstream dest;
         ofstream MyFile;
         Simulation* simulation;
-
+        TestOracle* testOracle;
         SimulationFile(){ 
             simulation = new Simulation();
-
+            testOracle = new TestOracle();
+            
             // Copy the static Input Test Data into location of the test folder
             std::ifstream src("../../Ass3.txt", std::ios::binary);
             std::ofstream dest("Ass3.txt", std::ios::binary);
@@ -22,6 +24,7 @@ class SimulationFile : public::testing::Test {
         }
         ~SimulationFile(){ 
             MyFile.close();
+            delete testOracle;
             delete simulation;
             std::cout << "Destructing SimulationFile" << std::endl; 
             
@@ -37,6 +40,8 @@ class SimulationFile : public::testing::Test {
 
 };
 
+
+
 // Subtest of suite creates a file (not randomly) and tries to open it.
 TEST_F(SimulationFile, openCreatedFile){
     const char* fileName = "CreatedFile.txt";
@@ -51,8 +56,6 @@ TEST_F(SimulationFile, openNonCreatedFile){
 }
 
 // Subtest involves in running on a fixed test data 
-// This is to provide a baseline for comparing test results 
-// Will also be used for comparison when refactoring ass3-refactor
 TEST_F(SimulationFile, workingRun){
     const char* fileName = "Ass3.txt";
     simulation->openFile(fileName);
@@ -60,9 +63,17 @@ TEST_F(SimulationFile, workingRun){
     ASSERT_EQ(0,simulation->run());
 }
 
+// Subtest involves in running on a fixed test data 
+TEST_F(SimulationFile, workingRunWithOracle){
+    const char* fileName = "Ass3.txt";
+    simulation->openFile(fileName);
+    simulation->readFile();
+    testOracle->openFile(fileName);
+    testOracle->readFile();
+    ASSERT_EQ(testOracle->run(), simulation->run());
+}
 
 int main(int argc, char **argv){
     testing::InitGoogleTest(&argc, argv);
-
     return RUN_ALL_TESTS();
 }

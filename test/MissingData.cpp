@@ -8,14 +8,16 @@ class MissingData : public::testing::Test {
     protected:
         ofstream MyFile;
         Simulation* simulation;
-
+        TestOracle* testOracle;
         MissingData(){ 
             simulation = new Simulation();
+            testOracle = new TestOracle();
             std::cout << "MissingData Class is constructed" << std::endl; 
             
         }
         ~MissingData(){ 
             delete simulation;
+            delete testOracle;
             MyFile.close();
             std::cout << "Destructing MissingData Class" << std::endl; 
            
@@ -137,10 +139,10 @@ void MissingData::writeCompletePath(){
 void MissingData::writeOneEdge(){
 
     MyFile << 1 << "\t" << 2 << "\t" << 1 << endl; 
-    MyFile << no_of_edges << "\t" << no_of_edges << "\t" << 1 << endl; 
     MyFile << 1 << "\t" << no_of_edges << endl;
     
 }
+
 TEST_F(MissingData, Missing_No_Vertices_Edges){
     const char* fileName = "Missing_No_Vertices_Edges.txt";
     writeMissingVerticeEdges(fileName);
@@ -205,4 +207,25 @@ TEST_F(MissingData, writeOneEdge){
     writeOneEdge();
     simulation->openFile(fileName);       
     ASSERT_EQ(1,simulation->readFile());
+}
+
+TEST_F(MissingData, completedPath){
+    const char* fileName = "CompletedPath.txt";
+    writeVertices(fileName);
+    writeCompletePath();
+    simulation->openFile(fileName);    
+    simulation->readFile();   
+    ASSERT_EQ(0,simulation->run());
+}
+
+
+TEST_F(MissingData, completedPathWithOracle){
+    const char* fileName = "CompletedPath.txt";
+    writeVertices(fileName);
+    writeCompletePath();
+    simulation->openFile(fileName);    
+    simulation->readFile();   
+    testOracle->openFile(fileName);    
+    testOracle->readFile();   
+    ASSERT_EQ(testOracle->run(),simulation->run());
 }
